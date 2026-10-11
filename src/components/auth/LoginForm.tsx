@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { Lock, User, ArrowRight, AlertCircle } from "lucide-react";
 import { PwaInstallButton } from "@/components/pwa/PwaInstallButton";
 
