@@ -1,10 +1,17 @@
 import { db } from "./client";
 
 export async function initDatabase(): Promise<void> {
-  // Execute table definitions in batches
-  await db.execute(`PRAGMA foreign_keys = ON;`);
-  await db.execute(`PRAGMA journal_mode = WAL;`);
-  await db.execute(`PRAGMA busy_timeout = 5000;`);
+  const url = process.env.DATABASE_URL || "";
+  const isRemote = url.startsWith("libsql://") || url.startsWith("https://");
+  if (!isRemote) {
+    try {
+      await db.execute(`PRAGMA foreign_keys = ON;`);
+      await db.execute(`PRAGMA journal_mode = WAL;`);
+      await db.execute(`PRAGMA busy_timeout = 5000;`);
+    } catch {
+      // Ignored for environments that don't support pragma execution
+    }
+  }
 
   await db.execute(`
     CREATE TABLE IF NOT EXISTS businesses (
