@@ -53,26 +53,26 @@ export function LoginForm({ onSuccess }: Props) {
       <div className="w-full max-w-sm my-auto">
         {/* Brand Identity */}
         <div className="text-center mb-6">
-          <div className="relative mx-auto w-28 h-28 mb-3 flex items-center justify-center">
+          <div className="relative mx-auto w-32 h-32 mb-2 flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.png"
               alt="Level Up Arena"
-              className="w-full h-full object-contain rounded-2xl drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]"
+              className="w-full h-full object-contain rounded-2xl drop-shadow-[0_12px_30px_rgba(0,0,0,0.85)]"
             />
           </div>
-          <h1 className="text-2xl font-black tracking-tight text-white">
+          <h1 className="font-display text-2xl font-bold tracking-wide text-[#F0EBDD]">
             LEVEL UP
           </h1>
-          <p className="text-xs text-zinc-400 mt-1 font-medium tracking-wide">
-            Pool &amp; Snooker Lounge &bull; Dahod
+          <p className="text-[11px] text-[#A6AAA3] mt-1 font-semibold tracking-widest uppercase">
+            Pool &amp; Snooker Arena &bull; Dahod
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-[#0e121a] border border-zinc-800/80 rounded-2xl p-6 sm:p-7 shadow-2xl">
+        <div className="bg-[#131714] border border-[#202722] rounded-2xl p-6 sm:p-7 shadow-2xl">
           <div className="mb-5">
-            <h2 className="text-base font-semibold text-white">Sign In</h2>
+            <h2 className="font-display text-lg font-semibold text-[#F0EBDD]">Sign In</h2>
           </div>
 
           {error && (
@@ -84,19 +84,19 @@ export function LoginForm({ onSuccess }: Props) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+              <label className="block text-xs font-medium text-[#A6AAA3] mb-1.5">
                 User ID
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#6B726B]">
                   <User className="w-4 h-4" />
                 </div>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. owner or manager"
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#090b10] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white placeholder-zinc-600 transition-colors outline-none"
+                  placeholder="levelup@dahod"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#0E1210] border border-[#202722] focus:border-[#187653] focus:ring-1 focus:ring-[#187653]/30 rounded-xl text-sm text-[#F0EBDD] placeholder-[#6B726B] transition-colors outline-none"
                   autoComplete="username"
                   required
                 />
@@ -104,11 +104,11 @@ export function LoginForm({ onSuccess }: Props) {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+              <label className="block text-xs font-medium text-[#A6AAA3] mb-1.5">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#6B726B]">
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
@@ -116,7 +116,7 @@ export function LoginForm({ onSuccess }: Props) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#090b10] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white placeholder-zinc-600 transition-colors outline-none"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#0E1210] border border-[#202722] focus:border-[#187653] focus:ring-1 focus:ring-[#187653]/30 rounded-xl text-sm text-[#F0EBDD] placeholder-[#6B726B] transition-colors outline-none"
                   autoComplete="current-password"
                   required
                 />
@@ -126,7 +126,7 @@ export function LoginForm({ onSuccess }: Props) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 text-white font-medium text-sm rounded-xl transition-colors shadow-sm flex items-center justify-center cursor-pointer"
+              className="w-full mt-2 py-3 px-4 bg-[#187653] hover:bg-[#123B2C] active:bg-[#0F2F23] disabled:opacity-50 text-[#F0EBDD] font-medium text-sm rounded-xl transition-all shadow-md flex items-center justify-center cursor-pointer tracking-wide"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -137,11 +137,12 @@ export function LoginForm({ onSuccess }: Props) {
           </form>
 
           {/* Install Level Up App button right here under the form */}
-          <div className="mt-4 pt-4 border-t border-zinc-800/80">
+          <div className="mt-4 pt-4 border-t border-[#202722]">
             <PwaInstallButton variant="login" />
           </div>
         </div>
       </div>
+
 
       {/* Footer */}
       <footer className="w-full max-w-sm text-center pt-4">

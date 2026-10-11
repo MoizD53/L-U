@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfair = Playfair_Display({
+  variable: "--font-serif",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +40,7 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#059669",
+  themeColor: "#0B0D0C",
 };
 
 export default function RootLayout({
@@ -43,11 +51,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full dark`}
+      className={`${playfair.variable} ${jakarta.variable} ${mono.variable} h-full dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#080b11] text-zinc-100 selection:bg-emerald-600 selection:text-white antialiased">
+      <body className="min-h-full flex flex-col bg-[#0B0D0C] text-[#F0EBDD] font-sans selection:bg-[#187653] selection:text-[#F0EBDD] antialiased">
         {children}
       </body>
     </html>
   );
 }
+

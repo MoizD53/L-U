@@ -1,17 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  --background: #090b10;
-  --foreground: #f4f4f5;
+  --background: #0B0D0C;
+  --foreground: #F0EBDD;
+  --surface-charcoal: #131714;
+  --surface-elevated: #181E19;
+  --surface-input: #0E1210;
+  --border-subtle: #202722;
+  --border-muted: #2A332C;
+  --billiards-green: #123B2C;
+  --refined-emerald: #187653;
+  --antique-brass: #B69A62;
+  --text-ivory: #F0EBDD;
+  --text-secondary: #A6AAA3;
+  --text-dim: #6B726B;
   color-scheme: dark;
 }
 
 body {
-  background-color: #090b10;
-  color: #f4f4f5;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #0B0D0C;
+  color: #F0EBDD;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.font-display {
+  font-family: var(--font-serif), "Playfair Display", Georgia, serif;
+}
+
+.font-mono-numbers {
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom scrollbars for clean editorial luxury look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0D0C;
+}
+::-webkit-scrollbar-thumb {
+  background: #202722;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2E3831;
 }
 
 /* Fix browser autofill styling so inputs stay dark */
@@ -19,10 +56,10 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #0d111a inset !important;
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #ffffff !important;
-  border-color: #27272a !important;
+  -webkit-box-shadow: 0 0 0 1000px #0E1210 inset !important;
+  -webkit-text-fill-color: #F0EBDD !important;
+  caret-color: #F0EBDD !important;
+  border-color: #202722 !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 

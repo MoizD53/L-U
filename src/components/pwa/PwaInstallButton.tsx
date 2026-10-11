@@ -16,15 +16,15 @@ export function PwaInstallButton({ variant = "header" }: Props) {
   if (isInstalled) {
     if (variant === "login") {
       return (
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-zinc-400 bg-zinc-900/80 border border-zinc-800 rounded-lg">
-          <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#A6AAA3] bg-[#0E1210] border border-[#202722] rounded-lg">
+          <CheckCircle className="w-3.5 h-3.5 text-[#187653]" />
           <span>App Installed</span>
         </div>
       );
     }
     return (
-      <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 text-xs text-emerald-400 bg-emerald-950/30 border border-emerald-800/30 rounded-full font-medium">
-        <CheckCircle className="w-3.5 h-3.5" />
+      <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 text-xs text-[#F0EBDD] bg-[#123B2C]/40 border border-[#187653]/30 rounded-full font-medium">
+        <CheckCircle className="w-3.5 h-3.5 text-[#187653]" />
         <span>Installed</span>
       </div>
     );
@@ -40,10 +40,10 @@ export function PwaInstallButton({ variant = "header" }: Props) {
 
   const buttonClasses =
     variant === "login"
-      ? "w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#090b10] hover:bg-zinc-900/90 text-zinc-300 hover:text-white border border-zinc-800/80 hover:border-zinc-700 rounded-xl font-medium text-xs transition-colors"
+      ? "w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#0E1210] hover:bg-[#181E19] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#202722] hover:border-[#2A332C] rounded-xl font-medium text-xs transition-colors"
       : variant === "card"
-      ? "flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium text-sm transition-all shadow-md active:scale-95"
-      : "flex items-center gap-2 px-3 py-1.5 bg-emerald-900/40 hover:bg-emerald-800/60 text-emerald-300 border border-emerald-600/40 rounded-lg text-xs font-semibold transition-all active:scale-95";
+      ? "flex items-center gap-2 px-4 py-2.5 bg-[#187653] hover:bg-[#123B2C] text-[#F0EBDD] rounded-xl font-medium text-sm transition-all shadow-md active:scale-95"
+      : "flex items-center gap-2 px-3 py-1.5 bg-[#123B2C]/40 hover:bg-[#123B2C]/70 text-[#F0EBDD] border border-[#187653]/40 rounded-lg text-xs font-semibold transition-all active:scale-95";
 
   return (
     <>
@@ -53,7 +53,7 @@ export function PwaInstallButton({ variant = "header" }: Props) {
         className={buttonClasses}
         aria-label="Install Level Up PWA"
       >
-        <Download className="w-4 h-4 text-emerald-400" />
+        <Download className="w-3.5 h-3.5 text-[#187653]" />
         <span>Install Level Up App</span>
       </button>
 
