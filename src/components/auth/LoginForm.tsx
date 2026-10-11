@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Lock, User, ArrowRight, AlertCircle } from "lucide-react";
+import { Lock, User, AlertCircle } from "lucide-react";
 import { PwaInstallButton } from "@/components/pwa/PwaInstallButton";
 
 interface Props {
@@ -45,54 +45,47 @@ export function LoginForm({ onSuccess }: Props) {
     }
   };
 
-
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 bg-[#080b11] relative overflow-hidden">
-      {/* Background Decorative Billiards Table Geometry */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen w-full flex flex-col justify-between items-center px-4 py-8 bg-[#090b10] text-zinc-100 select-none">
+      <div />
 
-      <div className="w-full max-w-md relative z-10">
-        {/* Brand Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-950 p-0.5 shadow-2xl shadow-emerald-950/60 mb-4 ring-1 ring-emerald-500/30">
-            <div className="w-full h-full bg-[#0b101a] rounded-[22px] flex flex-col items-center justify-center">
-              <span className="text-2xl font-black tracking-tight text-white flex items-center gap-0.5">
-                <span className="text-emerald-400">LU</span>
-              </span>
-              <span className="text-[9px] font-bold tracking-widest text-amber-400 uppercase">Dahod</span>
-            </div>
+      {/* Main Login Area */}
+      <div className="w-full max-w-sm my-auto">
+        {/* Brand Identity */}
+        <div className="text-center mb-6">
+          <div className="relative mx-auto w-28 h-28 mb-3 flex items-center justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt="Level Up Arena"
+              className="w-full h-full object-contain rounded-2xl drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]"
+            />
           </div>
-          <h1 className="text-3xl font-black tracking-tight text-white mb-1">
-            LEVEL <span className="text-emerald-400">UP</span>
+          <h1 className="text-2xl font-black tracking-tight text-white">
+            LEVEL UP
           </h1>
-          <p className="text-xs uppercase tracking-widest text-zinc-400 font-semibold">
-            Pool &amp; Snooker Arena
+          <p className="text-xs text-zinc-400 mt-1 font-medium tracking-wide">
+            Pool &amp; Snooker Lounge &bull; Dahod
           </p>
-          <div className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-0.5 bg-zinc-900 border border-zinc-800 rounded-full text-[11px] text-zinc-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span>Arena Business Management</span>
-          </div>
         </div>
 
-        {/* Login Box */}
-        <div className="bg-[#0f1420]/90 backdrop-blur-xl border border-zinc-800/80 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/80">
-          <div className="mb-6">
-            <h2 className="text-lg font-bold text-white mb-1">Staff Sign In</h2>
-            <p className="text-xs text-zinc-400">Enter your arena operator ID and password</p>
+        {/* Login Card */}
+        <div className="bg-[#0e121a] border border-zinc-800/80 rounded-2xl p-6 sm:p-7 shadow-2xl">
+          <div className="mb-5">
+            <h2 className="text-base font-semibold text-white">Sign In</h2>
           </div>
 
           {error && (
-            <div className="mb-5 p-3.5 bg-red-950/60 border border-red-800/60 rounded-xl flex items-start gap-2.5 text-xs text-red-300 animate-in fade-in">
-              <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+            <div className="mb-4 p-3 bg-red-950/40 border border-red-800/50 rounded-xl flex items-center gap-2.5 text-xs text-red-300">
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-1.5">
-                User / Business ID
+              <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                User ID
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
@@ -103,7 +96,7 @@ export function LoginForm({ onSuccess }: Props) {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="e.g. owner or manager"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0a0d14] border border-zinc-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl text-sm text-white placeholder-zinc-500 transition-all outline-none"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#090b10] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white placeholder-zinc-600 transition-colors outline-none"
                   autoComplete="username"
                   required
                 />
@@ -111,7 +104,7 @@ export function LoginForm({ onSuccess }: Props) {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-medium text-zinc-300 mb-1.5">
                 Password
               </label>
               <div className="relative">
@@ -122,8 +115,8 @@ export function LoginForm({ onSuccess }: Props) {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0a0d14] border border-zinc-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl text-sm text-white placeholder-zinc-500 transition-all outline-none"
+                  placeholder="••••••••"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#090b10] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white placeholder-zinc-600 transition-colors outline-none"
                   autoComplete="current-password"
                   required
                 />
@@ -133,31 +126,29 @@ export function LoginForm({ onSuccess }: Props) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 text-white font-bold text-sm rounded-xl transition-all shadow-lg shadow-emerald-950/50 flex items-center justify-center gap-2 mt-2"
+              className="w-full mt-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 text-white font-medium text-sm rounded-xl transition-colors shadow-sm flex items-center justify-center cursor-pointer"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                <>
-                  <span>Sign In to Arena</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
+                "Sign In"
               )}
             </button>
           </form>
 
-
-          {/* PWA Install Button on Login Page */}
-          <div className="mt-5 pt-4 border-t border-zinc-800/60">
+          {/* Install Level Up App button right here under the form */}
+          <div className="mt-4 pt-4 border-t border-zinc-800/80">
             <PwaInstallButton variant="login" />
           </div>
         </div>
-
-        {/* Footer info */}
-        <div className="mt-6 text-center text-xs text-zinc-500">
-          <p>Level Up Arena &bull; Dahod, Gujarat, India</p>
-        </div>
       </div>
+
+      {/* Footer */}
+      <footer className="w-full max-w-sm text-center pt-4">
+        <p className="text-xs text-zinc-400">Level Up &bull; Dahod, Gujarat</p>
+      </footer>
     </div>
   );
 }
+
+

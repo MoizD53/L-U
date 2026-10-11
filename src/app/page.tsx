@@ -49,6 +49,15 @@ export default function ArenaApp() {
   const [refreshKey, setRefreshKey] = useState(0);
   const triggerRefresh = () => setRefreshKey((k) => k + 1);
 
+  const changeTab = (tab: TabId) => {
+    setCurrentTab(tab);
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("levelup_tab", tab);
+      } catch {}
+    }
+  };
+
   // Check auth on load
   const verifyAuth = () => {
     fetch("/api/auth/me")
@@ -67,12 +76,18 @@ export default function ArenaApp() {
   useEffect(() => {
     verifyAuth();
 
-    // Check PWA shortcut URL params
+    // Check PWA shortcut URL params or localStorage
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get("tab") as TabId;
-      if (tabParam && ["home", "pool", "snooker", "customers", "shop", "expenses", "reports", "settings"].includes(tabParam)) {
+      const validTabs: TabId[] = ["home", "pool", "snooker", "customers", "shop", "expenses", "reports", "settings"];
+      if (tabParam && validTabs.includes(tabParam)) {
         setCurrentTab(tabParam);
+      } else {
+        const savedTab = localStorage.getItem("levelup_tab") as TabId;
+        if (savedTab && validTabs.includes(savedTab)) {
+          setCurrentTab(savedTab);
+        }
       }
     }
   }, []);
@@ -153,7 +168,7 @@ export default function ArenaApp() {
         {/* Desktop Sidebar */}
         <Sidebar
           currentTab={currentTab}
-          onSelectTab={setCurrentTab}
+          onSelectTab={changeTab}
           userRole={session.role}
           activePoolCount={activePoolCount}
           activeSnookerCount={activeSnookerCount}
@@ -164,7 +179,7 @@ export default function ArenaApp() {
           {currentTab === "home" && (
             <HomeView
               key={`home-${refreshKey}`}
-              onNavigateTab={setCurrentTab}
+              onNavigateTab={changeTab}
               onStartPoolGame={handleStartPoolQuick}
               onStartSnookerGame={handleStartSnookerQuick}
               onCounterSale={() => setShowCounterSale(true)}
@@ -239,7 +254,7 @@ export default function ArenaApp() {
       {/* Mobile Bottom Navigation */}
       <MobileNav
         currentTab={currentTab}
-        onSelectTab={setCurrentTab}
+        onSelectTab={changeTab}
         activePoolCount={activePoolCount}
         activeSnookerCount={activeSnookerCount}
         onOpenClosingModal={() => setShowDailyClosing(true)}

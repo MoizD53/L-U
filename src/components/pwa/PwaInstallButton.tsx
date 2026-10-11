@@ -16,9 +16,9 @@ export function PwaInstallButton({ variant = "header" }: Props) {
   if (isInstalled) {
     if (variant === "login") {
       return (
-        <div className="flex items-center justify-center gap-2 px-3 py-1.5 text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 rounded-full font-medium">
-          <CheckCircle className="w-3.5 h-3.5" />
-          <span>App Installed on Device</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-zinc-400 bg-zinc-900/80 border border-zinc-800 rounded-lg">
+          <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+          <span>App Installed</span>
         </div>
       );
     }
@@ -40,7 +40,7 @@ export function PwaInstallButton({ variant = "header" }: Props) {
 
   const buttonClasses =
     variant === "login"
-      ? "w-full flex items-center justify-center gap-2.5 py-3 px-4 bg-emerald-700/20 hover:bg-emerald-700/30 text-emerald-300 hover:text-emerald-200 border border-emerald-600/40 hover:border-emerald-500 rounded-xl font-medium text-sm transition-all shadow-sm active:scale-[0.99]"
+      ? "w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#090b10] hover:bg-zinc-900/90 text-zinc-300 hover:text-white border border-zinc-800/80 hover:border-zinc-700 rounded-xl font-medium text-xs transition-colors"
       : variant === "card"
       ? "flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium text-sm transition-all shadow-md active:scale-95"
       : "flex items-center gap-2 px-3 py-1.5 bg-emerald-900/40 hover:bg-emerald-800/60 text-emerald-300 border border-emerald-600/40 rounded-lg text-xs font-semibold transition-all active:scale-95";
