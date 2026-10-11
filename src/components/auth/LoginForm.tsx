@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import { Lock, User, ArrowRight, ShieldCheck, Sparkles, AlertCircle } from "lucide-react";
+import { Lock, User, ArrowRight, AlertCircle } from "lucide-react";
 import { PwaInstallButton } from "@/components/pwa/PwaInstallButton";
 
 interface Props {
@@ -45,11 +44,6 @@ export function LoginForm({ onSuccess }: Props) {
     }
   };
 
-  const fillCredentials = (user: string, pass: string) => {
-    setUsername(user);
-    setPassword(pass);
-    setError(null);
-  };
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 bg-[#080b11] relative overflow-hidden">
@@ -151,37 +145,6 @@ export function LoginForm({ onSuccess }: Props) {
             </button>
           </form>
 
-          {/* Quick Staff Credentials Helper */}
-          <div className="mt-6 pt-5 border-t border-zinc-800/80">
-            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-400 mb-2.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Quick Login (Arena Operators):</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => fillCredentials("owner", "admin123")}
-                className="py-2 px-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-left transition-all group"
-              >
-                <div className="flex items-center justify-between text-xs font-semibold text-white group-hover:text-emerald-400">
-                  <span>Owner</span>
-                  <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                </div>
-                <div className="text-[10px] text-zinc-500">Full Access</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => fillCredentials("manager", "manager123")}
-                className="py-2 px-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-left transition-all group"
-              >
-                <div className="flex items-center justify-between text-xs font-semibold text-white group-hover:text-emerald-400">
-                  <span>Manager</span>
-                  <User className="w-3 h-3 text-emerald-400" />
-                </div>
-                <div className="text-[10px] text-zinc-500">Shift Operations</div>
-              </button>
-            </div>
-          </div>
 
           {/* PWA Install Button on Login Page */}
           <div className="mt-5 pt-4 border-t border-zinc-800/60">
@@ -192,7 +155,6 @@ export function LoginForm({ onSuccess }: Props) {
         {/* Footer info */}
         <div className="mt-6 text-center text-xs text-zinc-500">
           <p>Level Up Arena &bull; Dahod, Gujarat, India</p>
-          <p className="text-[10px] mt-1 text-zinc-600">All data encrypted and saved locally in secure libSQL database</p>
         </div>
       </div>
     </div>
