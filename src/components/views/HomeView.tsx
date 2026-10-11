@@ -75,7 +75,7 @@ export function HomeView({
   if (loading && !data) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="w-8 h-8 border-3 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#187653]/30 border-t-[#187653] rounded-full animate-spin" />
       </div>
     );
   }
@@ -83,259 +83,281 @@ export function HomeView({
   if (!data) return null;
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-16">
-      {/* Date Header & Shift Status */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <div className="space-y-7 max-w-7xl mx-auto pb-20 select-none">
+      {/* Editorial Header & Shift Status */}
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-[#202722] pb-5">
         <div>
-          <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-            Dahod Arena Register
+          <div className="text-[10px] font-semibold uppercase tracking-widest text-[#B69A62]">
+            Dahod Arena &bull; Operational Register
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Today&apos;s Overview
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-[#F0EBDD] tracking-tight mt-0.5">
+            Today&apos;s Ledger &amp; Tables
           </h1>
-          <p className="text-xs text-zinc-400">
-            Business Date: <strong className="text-zinc-200">{data.date}</strong> &bull; Asia/Kolkata
+          <p className="text-xs text-[#A6AAA3] mt-1">
+            Business Date: <span className="font-mono-numbers text-[#F0EBDD]">{data.date}</span> &bull; Asia/Kolkata
           </p>
         </div>
 
-        {/* Daily Closing Reminder Banner */}
-        {data.isShiftOpen ? (
-          <button
-            type="button"
-            onClick={onCloseHisab}
-            className="flex items-center gap-2 px-3.5 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-bold transition-all shrink-0 self-start sm:self-auto"
-          >
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
-            <span>Shift Open &bull; Close Today&apos;s Hisab</span>
-          </button>
-        ) : (
-          <div className="flex items-center gap-2 px-3.5 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs font-semibold text-zinc-400">
-            <Lock className="w-3.5 h-3.5 text-zinc-500" />
-            <span>Today&apos;s Hisab Closed &amp; Locked</span>
-          </div>
-        )}
+        {/* Shift / Daily Closing Trigger */}
+        <div>
+          {data.isShiftOpen ? (
+            <button
+              type="button"
+              onClick={onCloseHisab}
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#131714] hover:bg-[#181E19] text-[#B69A62] border border-[#B69A62]/30 rounded-xl text-xs font-medium transition-colors cursor-pointer"
+            >
+              <AlertTriangle className="w-3.5 h-3.5 text-[#B69A62]" />
+              <span>Shift Active &bull; Reconcile Daily Hisab</span>
+            </button>
+          ) : (
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#131714] border border-[#202722] rounded-xl text-xs font-medium text-[#A6AAA3]">
+              <Lock className="w-3.5 h-3.5 text-[#6B726B]" />
+              <span>Today&apos;s Hisab Reconciled &amp; Locked</span>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Prominent Quick Actions Toolbar */}
-      <div className="bg-[#0f1420] border border-zinc-800/80 rounded-2xl p-4 sm:p-5 shadow-lg shadow-black/40">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
-          Quick Actions (Fast Tap)
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+      {/* Primary & Secondary Operational Actions */}
+      <div className="space-y-2.5">
+        <div className="text-[10px] font-semibold uppercase tracking-widest text-[#6B726B]">
+          Operational Actions
+        </div>
+
+        {/* Primary Table Launchers */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <button
             type="button"
             onClick={onStartPoolGame}
-            className="flex flex-col items-center justify-center p-3 bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-600/40 hover:border-emerald-500 rounded-xl text-center transition-all group active:scale-95"
+            className="flex items-center justify-between p-4 bg-[#123B2C] hover:bg-[#154634] active:bg-[#0F2F23] border border-[#187653]/40 rounded-xl text-left transition-all cursor-pointer shadow-sm group"
           >
-            <CircleDot className="w-5 h-5 text-emerald-400 mb-1 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white">Start Pool</span>
-            <span className="text-[10px] text-emerald-400/80">3 Tables</span>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[#0B0D0C]/40 flex items-center justify-center text-[#F0EBDD]">
+                <CircleDot className="w-5 h-5 text-[#187653] group-hover:text-[#F0EBDD] transition-colors" />
+              </div>
+              <div>
+                <div className="font-display font-semibold text-base text-[#F0EBDD] leading-tight">
+                  Start Pool Session
+                </div>
+                <div className="text-xs text-[#A6AAA3]">
+                  {data.activePoolTables} of 3 tables active
+                </div>
+              </div>
+            </div>
+            <span className="text-xs font-medium text-[#F0EBDD] px-2.5 py-1 bg-[#0B0D0C]/40 rounded-lg">
+              Launch Table &rarr;
+            </span>
           </button>
 
           <button
             type="button"
             onClick={onStartSnookerGame}
-            className="flex flex-col items-center justify-center p-3 bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-600/40 hover:border-emerald-500 rounded-xl text-center transition-all group active:scale-95"
+            className="flex items-center justify-between p-4 bg-[#123B2C] hover:bg-[#154634] active:bg-[#0F2F23] border border-[#187653]/40 rounded-xl text-left transition-all cursor-pointer shadow-sm group"
           >
-            <Trophy className="w-5 h-5 text-emerald-400 mb-1 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white">Start Snooker</span>
-            <span className="text-[10px] text-emerald-400/80">2 Tables</span>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[#0B0D0C]/40 flex items-center justify-center text-[#F0EBDD]">
+                <Trophy className="w-5 h-5 text-[#187653] group-hover:text-[#F0EBDD] transition-colors" />
+              </div>
+              <div>
+                <div className="font-display font-semibold text-base text-[#F0EBDD] leading-tight">
+                  Start Snooker Session
+                </div>
+                <div className="text-xs text-[#A6AAA3]">
+                  {data.activeSnookerTables} of 2 tables active
+                </div>
+              </div>
+            </div>
+            <span className="text-xs font-medium text-[#F0EBDD] px-2.5 py-1 bg-[#0B0D0C]/40 rounded-lg">
+              Launch Table &rarr;
+            </span>
           </button>
+        </div>
 
+        {/* Secondary Auxiliary Counter Actions */}
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1">
           <button
             type="button"
             onClick={onCounterSale}
-            className="flex flex-col items-center justify-center p-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-xl text-center transition-all group active:scale-95"
+            className="p-3 bg-[#131714] hover:bg-[#181E19] border border-[#202722] hover:border-[#2A332C] rounded-xl text-left transition-colors cursor-pointer"
           >
-            <ShoppingBag className="w-5 h-5 text-amber-400 mb-1 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white">Counter Sale</span>
-            <span className="text-[10px] text-zinc-400">Snacks &amp; Drinks</span>
+            <ShoppingBag className="w-4 h-4 text-[#B69A62] mb-1.5" />
+            <div className="text-xs font-medium text-[#F0EBDD]">Counter Sale</div>
+            <div className="text-[10px] text-[#6B726B]">Shop &amp; Snacks</div>
           </button>
 
           <button
             type="button"
             onClick={onAddExpense}
-            className="flex flex-col items-center justify-center p-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-xl text-center transition-all group active:scale-95"
+            className="p-3 bg-[#131714] hover:bg-[#181E19] border border-[#202722] hover:border-[#2A332C] rounded-xl text-left transition-colors cursor-pointer"
           >
-            <Receipt className="w-5 h-5 text-rose-400 mb-1 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white">Add Expense</span>
-            <span className="text-[10px] text-zinc-400">Bills &amp; Salary</span>
+            <Receipt className="w-4 h-4 text-[#A6AAA3] mb-1.5" />
+            <div className="text-xs font-medium text-[#F0EBDD]">Record Expense</div>
+            <div className="text-[10px] text-[#6B726B]">Cash / Bank</div>
           </button>
 
           <button
             type="button"
             onClick={onAddCustomer}
-            className="flex flex-col items-center justify-center p-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-xl text-center transition-all group active:scale-95"
+            className="p-3 bg-[#131714] hover:bg-[#181E19] border border-[#202722] hover:border-[#2A332C] rounded-xl text-left transition-colors cursor-pointer"
           >
-            <UserPlus className="w-5 h-5 text-blue-400 mb-1 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white">Add Customer</span>
-            <span className="text-[10px] text-zinc-400">New Player</span>
+            <UserPlus className="w-4 h-4 text-[#A6AAA3] mb-1.5" />
+            <div className="text-xs font-medium text-[#F0EBDD]">Add Customer</div>
+            <div className="text-[10px] text-[#6B726B]">Player Directory</div>
           </button>
 
           <button
             type="button"
             onClick={onCollectUdhaar}
-            className="flex flex-col items-center justify-center p-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-xl text-center transition-all group active:scale-95"
+            className="p-3 bg-[#131714] hover:bg-[#181E19] border border-[#202722] hover:border-[#2A332C] rounded-xl text-left transition-colors cursor-pointer"
           >
-            <Coins className="w-5 h-5 text-yellow-400 mb-1 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white">Collect Udhaar</span>
-            <span className="text-[10px] text-yellow-400/80">Player Debt</span>
+            <Coins className="w-4 h-4 text-[#B69A62] mb-1.5" />
+            <div className="text-xs font-medium text-[#F0EBDD]">Collect Udhaar</div>
+            <div className="text-[10px] text-[#B69A62]/80">Player Credit</div>
           </button>
 
           <button
             type="button"
             onClick={onCloseHisab}
-            className="col-span-2 sm:col-span-1 flex flex-col items-center justify-center p-3 bg-amber-950/30 hover:bg-amber-900/40 border border-amber-600/40 hover:border-amber-500 rounded-xl text-center transition-all group active:scale-95"
+            className="col-span-2 sm:col-span-1 p-3 bg-[#131714] hover:bg-[#181E19] border border-[#202722] hover:border-[#2A332C] rounded-xl text-left transition-colors cursor-pointer"
           >
-            <Lock className="w-5 h-5 text-amber-400 mb-1 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-bold text-white">Close Hisab</span>
-            <span className="text-[10px] text-amber-400/80">Daily Closing</span>
+            <Lock className="w-4 h-4 text-[#B69A62] mb-1.5" />
+            <div className="text-xs font-medium text-[#F0EBDD]">Close Hisab</div>
+            <div className="text-[10px] text-[#6B726B]">Cash Drawer</div>
           </button>
         </div>
       </div>
 
-      {/* Live Financial & KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
-        {/* Total Billed */}
-        <div className="p-4 bg-[#0f1420] border border-zinc-800/80 rounded-2xl flex flex-col justify-between">
-          <div className="text-[11px] font-semibold text-zinc-400 mb-1">
-            Today Billed Revenue
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-white font-mono">
-            {formatRupees(data.todayBilledPaise)}
-          </div>
-          <div className="text-[10px] text-zinc-500 mt-2">
-            Finalized table + shop bills
-          </div>
-        </div>
-
-        {/* Total Collected */}
-        <div className="p-4 bg-emerald-950/30 border border-emerald-600/40 rounded-2xl flex flex-col justify-between">
-          <div className="text-[11px] font-bold text-emerald-400 mb-1">
-            Total Collections
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-emerald-300 font-mono">
-            {formatRupees(data.todayCollectedPaise)}
-          </div>
-          <div className="text-[10px] text-emerald-400/80 mt-2">
-            Money received today
-          </div>
-        </div>
-
-        {/* Cash Collected */}
-        <div className="p-4 bg-[#0f1420] border border-zinc-800/80 rounded-2xl flex flex-col justify-between">
-          <div className="text-[11px] font-semibold text-zinc-400 mb-1">
-            Cash Collected (Rokad)
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-white font-mono">
-            {formatRupees(data.cashCollectedPaise)}
-          </div>
-          <div className="text-[10px] text-zinc-500 mt-2">
-            Physical cash in drawer
-          </div>
-        </div>
-
-        {/* UPI Collected */}
-        <div className="p-4 bg-[#0f1420] border border-zinc-800/80 rounded-2xl flex flex-col justify-between">
-          <div className="text-[11px] font-semibold text-zinc-400 mb-1">
-            UPI Collected
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-emerald-400 font-mono">
-            {formatRupees(data.upiCollectedPaise)}
-          </div>
-          <div className="text-[10px] text-zinc-500 mt-2">
-            Online bank deposits
-          </div>
-        </div>
-
-        {/* Total Expenses */}
-        <div className="p-4 bg-[#0f1420] border border-zinc-800/80 rounded-2xl flex flex-col justify-between">
-          <div className="text-[11px] font-semibold text-rose-400 mb-1">
-            Today&apos;s Expenses
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-rose-300 font-mono">
-            {formatRupees(data.todayExpensesPaise)}
-          </div>
-          <div className="text-[10px] text-zinc-500 mt-2">
-            Drawer cash out: {formatRupees(data.drawerCashExpensesPaise)}
-          </div>
-        </div>
-
-        {/* Total Udhaar Baki */}
-        <div className="p-4 bg-amber-950/30 border border-amber-600/40 rounded-2xl flex flex-col justify-between">
-          <div className="text-[11px] font-bold text-amber-400 mb-1">
-            Total Udhaar (Baki)
-          </div>
-          <div className="text-xl sm:text-2xl font-black text-amber-300 font-mono">
-            {formatRupees(data.totalOutstandingCreditPaise)}
-          </div>
-          <div className="text-[10px] text-amber-400/80 mt-2">
-            Active customer credit
-          </div>
-        </div>
-      </div>
-
-      {/* Operational Table Counters */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-3.5 bg-zinc-900/70 border border-zinc-800 rounded-xl flex items-center justify-between">
+      {/* Bespoke Financial Overview & Ledger */}
+      <div className="bg-[#131714] border border-[#202722] rounded-2xl p-5 sm:p-6 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#202722] gap-2">
           <div>
-            <span className="text-xs text-zinc-400 block">Pool Games Today</span>
-            <span className="text-xl font-black text-white font-mono">{data.poolGamesPlayedToday}</span>
-          </div>
-          <CircleDot className="w-5 h-5 text-emerald-400 opacity-60" />
-        </div>
-
-        <div className="p-3.5 bg-zinc-900/70 border border-zinc-800 rounded-xl flex items-center justify-between">
-          <div>
-            <span className="text-xs text-zinc-400 block">Snooker Games Today</span>
-            <span className="text-xl font-black text-white font-mono">{data.snookerGamesPlayedToday}</span>
-          </div>
-          <Trophy className="w-5 h-5 text-emerald-400 opacity-60" />
-        </div>
-
-        <div className="p-3.5 bg-zinc-900/70 border border-zinc-800 rounded-xl flex items-center justify-between">
-          <div>
-            <span className="text-xs text-zinc-400 block">Live Pool Tables</span>
-            <span className="text-xl font-black text-emerald-400 font-mono">
-              {data.activePoolTables} <span className="text-xs text-zinc-500">/ 3</span>
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-[#B69A62]">
+              Financial Accounting &bull; Real Time
             </span>
-          </div>
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-        </div>
-
-        <div className="p-3.5 bg-zinc-900/70 border border-zinc-800 rounded-xl flex items-center justify-between">
-          <div>
-            <span className="text-xs text-zinc-400 block">Live Snooker Tables</span>
-            <span className="text-xl font-black text-emerald-400 font-mono">
-              {data.activeSnookerTables} <span className="text-xs text-zinc-500">/ 2</span>
-            </span>
-          </div>
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-        </div>
-      </div>
-
-      {/* Currently Running Active Sessions Section */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-            <h2 className="text-base font-bold text-white">
-              Currently Running Games ({data.activeSessions.length})
+            <h2 className="font-display text-lg font-bold text-[#F0EBDD]">
+              Today&apos;s Revenue &amp; Cash Flow
             </h2>
           </div>
-          <div className="flex items-center gap-2 text-xs">
+          <span className="text-[11px] text-[#A6AAA3]">
+            Amounts stored in integer paise &bull; Zero client estimation
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-5">
+          {/* Column 1: Actual Collections (Money In Hand) */}
+          <div className="space-y-4 pr-0 lg:pr-6 border-b lg:border-b-0 lg:border-r border-[#202722] pb-5 lg:pb-0">
+            <div>
+              <div className="text-xs font-medium text-[#187653] uppercase tracking-wider">
+                Total Collections (Collected)
+              </div>
+              <div className="font-mono-numbers text-3xl sm:text-4xl font-bold text-[#F0EBDD] mt-1">
+                {formatRupees(data.todayCollectedPaise)}
+              </div>
+              <p className="text-[11px] text-[#A6AAA3] mt-1">
+                Actual money received today across all counters
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-[#202722]/80">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#A6AAA3]">Cash in Drawer (Rokad):</span>
+                <span className="font-mono-numbers font-medium text-[#F0EBDD]">
+                  {formatRupees(data.cashCollectedPaise)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#A6AAA3]">UPI &amp; Bank Collections:</span>
+                <span className="font-mono-numbers font-medium text-[#187653]">
+                  {formatRupees(data.upiCollectedPaise)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Billed Activity vs Expenses */}
+          <div className="space-y-4 pr-0 lg:pr-6 border-b lg:border-b-0 lg:border-r border-[#202722] pb-5 lg:pb-0">
+            <div>
+              <div className="text-xs font-medium text-[#A6AAA3] uppercase tracking-wider">
+                Billed Revenue (Invoiced)
+              </div>
+              <div className="font-mono-numbers text-3xl sm:text-4xl font-bold text-[#F0EBDD] mt-1">
+                {formatRupees(data.todayBilledPaise)}
+              </div>
+              <p className="text-[11px] text-[#6B726B] mt-1">
+                Total finalized table charges + counter invoices
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-[#202722]/80">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#A6AAA3]">Today&apos;s Total Expenses:</span>
+                <span className="font-mono-numbers font-medium text-[#F0EBDD]">
+                  {formatRupees(data.todayExpensesPaise)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#6B726B]">Drawer Cash Deductions:</span>
+                <span className="font-mono-numbers font-medium text-[#A6AAA3]">
+                  {formatRupees(data.drawerCashExpensesPaise)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 3: Outstanding Customer Credit (Udhaar) */}
+          <div className="space-y-4">
+            <div>
+              <div className="text-xs font-medium text-[#B69A62] uppercase tracking-wider">
+                Outstanding Credit (Udhaar)
+              </div>
+              <div className="font-mono-numbers text-3xl sm:text-4xl font-bold text-[#B69A62] mt-1">
+                {formatRupees(data.totalOutstandingCreditPaise)}
+              </div>
+              <p className="text-[11px] text-[#A6AAA3] mt-1">
+                Pending balance owed by registered players
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-[#202722]/80">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#A6AAA3]">Pool Games Completed:</span>
+                <span className="font-mono-numbers font-medium text-[#F0EBDD]">
+                  {data.poolGamesPlayedToday}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#A6AAA3]">Snooker Games Completed:</span>
+                <span className="font-mono-numbers font-medium text-[#F0EBDD]">
+                  {data.snookerGamesPlayedToday}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Active Table Sessions */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between border-b border-[#202722] pb-2">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#187653]" />
+            <h2 className="font-display text-lg font-semibold text-[#F0EBDD]">
+              Active Table Sessions ({data.activeSessions.length})
+            </h2>
+          </div>
+          <div className="flex items-center gap-3 text-xs">
             <button
               type="button"
               onClick={() => onNavigateTab("pool")}
-              className="text-emerald-400 hover:underline font-semibold"
+              className="text-[#A6AAA3] hover:text-[#F0EBDD] transition-colors cursor-pointer"
             >
               Pool Tables &rarr;
             </button>
-            <span className="text-zinc-600">&bull;</span>
+            <span className="text-[#202722]">&bull;</span>
             <button
               type="button"
               onClick={() => onNavigateTab("snooker")}
-              className="text-emerald-400 hover:underline font-semibold"
+              className="text-[#A6AAA3] hover:text-[#F0EBDD] transition-colors cursor-pointer"
             >
               Snooker Tables &rarr;
             </button>
@@ -343,26 +365,28 @@ export function HomeView({
         </div>
 
         {data.activeSessions.length === 0 ? (
-          <div className="p-8 bg-[#0f1420] border border-zinc-800/80 rounded-2xl text-center">
-            <div className="w-12 h-12 rounded-2xl bg-zinc-800/60 flex items-center justify-center mx-auto mb-3 text-zinc-500">
-              <Clock className="w-6 h-6" />
+          <div className="p-8 bg-[#131714] border border-[#202722] rounded-2xl text-center">
+            <div className="w-10 h-10 rounded-xl bg-[#0E1210] border border-[#202722] flex items-center justify-center mx-auto mb-3 text-[#6B726B]">
+              <Clock className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-white text-sm mb-1">All Tables Currently Available</h3>
-            <p className="text-xs text-zinc-400 mb-4">No active games running right now</p>
-            <div className="flex items-center justify-center gap-3">
+            <h3 className="font-display font-medium text-sm text-[#F0EBDD] mb-1">
+              All Tables Currently Available
+            </h3>
+            <p className="text-xs text-[#A6AAA3] mb-4">No live sessions in play at this moment</p>
+            <div className="flex items-center justify-center gap-2.5">
               <button
                 type="button"
                 onClick={onStartPoolGame}
-                className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold"
+                className="py-2 px-3.5 bg-[#187653] hover:bg-[#123B2C] text-[#F0EBDD] rounded-xl text-xs font-medium cursor-pointer transition-colors"
               >
-                Start Pool Game
+                Start Pool
               </button>
               <button
                 type="button"
                 onClick={onStartSnookerGame}
-                className="py-2 px-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xl text-xs font-bold"
+                className="py-2 px-3.5 bg-[#131714] hover:bg-[#181E19] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#202722] rounded-xl text-xs font-medium cursor-pointer transition-colors"
               >
-                Start Snooker Game
+                Start Snooker
               </button>
             </div>
           </div>
@@ -373,48 +397,48 @@ export function HomeView({
               return (
                 <div
                   key={session.id}
-                  className="p-4 bg-[#0f1420] border border-emerald-500/40 rounded-2xl flex flex-col justify-between shadow-lg space-y-3"
+                  className="p-4 bg-[#131714] border border-[#202722] rounded-xl flex flex-col justify-between space-y-3"
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#187653]">
                         {session.table_type} &bull; Live
-                      </span>
-                      <h3 className="font-bold text-base text-white">
+                      </div>
+                      <h3 className="font-display font-semibold text-base text-[#F0EBDD]">
                         {session.table_name || "Arena Table"}
                       </h3>
                       {session.customer_name ? (
-                        <div className="text-xs text-zinc-300 font-medium mt-0.5">
-                          Player: <strong className="text-white">{session.customer_name}</strong>
+                        <div className="text-xs text-[#A6AAA3] mt-0.5">
+                          Player: <span className="text-[#F0EBDD] font-medium">{session.customer_name}</span>
                         </div>
                       ) : (
-                        <div className="text-xs text-zinc-500 mt-0.5">Casual Walk-in Player</div>
+                        <div className="text-xs text-[#6B726B] mt-0.5">Walk-in Player</div>
                       )}
                     </div>
 
                     <div className="text-right">
-                      <div className="text-[10px] text-zinc-400">Estimated Total:</div>
-                      <div className="text-lg font-black text-white font-mono">
+                      <div className="text-[10px] text-[#A6AAA3]">Estimated:</div>
+                      <div className="font-mono-numbers text-lg font-bold text-[#F0EBDD]">
                         {formatRupees(session.final_amount_paise)}
                       </div>
                     </div>
                   </div>
 
                   {/* Live Timer Display */}
-                  <div className="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 flex items-center justify-between">
+                  <div className="p-2.5 bg-[#0E1210] rounded-lg border border-[#202722] flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-emerald-400" />
+                      <Clock className="w-3.5 h-3.5 text-[#187653]" />
                       <div>
-                        <div className="text-[10px] text-zinc-400">Started:</div>
-                        <div className="text-xs font-bold text-white font-mono">
+                        <div className="text-[10px] text-[#6B726B]">Started:</div>
+                        <div className="font-mono-numbers text-xs text-[#F0EBDD]">
                           {formatTimeIST(session.start_time)}
                         </div>
                       </div>
                     </div>
 
                     <div className="text-right">
-                      <div className="text-[10px] text-zinc-400">Duration:</div>
-                      <div className="text-base font-black text-emerald-300 font-mono">
+                      <div className="text-[10px] text-[#6B726B]">Elapsed:</div>
+                      <div className="font-mono-numbers text-sm font-semibold text-[#187653]">
                         {formatDurationMinutes(liveMins)}
                       </div>
                     </div>
@@ -422,9 +446,9 @@ export function HomeView({
 
                   {/* Add-ons line if present */}
                   {session.items && session.items.length > 0 && (
-                    <div className="text-xs text-amber-300 flex items-center justify-between px-1">
-                      <span>Add-on Products ({session.items.length}):</span>
-                      <span className="font-bold">{formatRupees(session.items_charge_paise)}</span>
+                    <div className="text-xs text-[#B69A62] flex items-center justify-between px-1">
+                      <span>Add-ons ({session.items.length}):</span>
+                      <span className="font-mono-numbers font-medium">{formatRupees(session.items_charge_paise)}</span>
                     </div>
                   )}
 
@@ -433,17 +457,17 @@ export function HomeView({
                     <button
                       type="button"
                       onClick={() => onAddItemsToSession(session)}
-                      className="py-2.5 px-3 bg-zinc-800/80 hover:bg-zinc-700 text-zinc-200 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+                      className="py-2 px-3 bg-[#0E1210] hover:bg-[#181E19] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#202722] rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
-                      <Plus className="w-3.5 h-3.5 text-emerald-400" />
+                      <Plus className="w-3 h-3 text-[#187653]" />
                       <span>+ Add Items</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => onEndSession(session)}
-                      className="py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
+                      className="py-2 px-3 bg-[#187653] hover:bg-[#123B2C] text-[#F0EBDD] rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
-                      <Square className="w-3 h-3 fill-white" />
+                      <Square className="w-2.5 h-2.5 fill-[#F0EBDD]" />
                       <span>End &amp; Bill</span>
                     </button>
                   </div>
@@ -454,54 +478,54 @@ export function HomeView({
         )}
       </div>
 
-      {/* Two Column Bottom Widgets: Recent Transactions & Debtors */}
+      {/* Two Column Bottom Ledgers: Recent Arena Bills & Player Udhaar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Recent Transactions */}
-        <div className="bg-[#0f1420] border border-zinc-800/80 rounded-2xl p-4 sm:p-5">
-          <div className="flex items-center justify-between mb-3 pb-2 border-b border-zinc-800">
-            <h3 className="font-bold text-white text-sm">Recent Arena Bills</h3>
+        {/* Recent Bills */}
+        <div className="bg-[#131714] border border-[#202722] rounded-2xl p-4 sm:p-5">
+          <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#202722]">
+            <h3 className="font-display font-semibold text-sm text-[#F0EBDD]">Recent Invoices</h3>
             <button
               type="button"
               onClick={() => onNavigateTab("reports")}
-              className="text-xs text-emerald-400 hover:underline flex items-center gap-1"
+              className="text-xs text-[#A6AAA3] hover:text-[#F0EBDD] flex items-center gap-1 transition-colors cursor-pointer"
             >
-              <span>View All</span>
+              <span>Ledger</span>
               <ArrowRight className="w-3 h-3" />
             </button>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {data.recentBills.length === 0 ? (
-              <div className="text-center py-6 text-zinc-500 text-xs">No bills created yet today</div>
+              <div className="text-center py-6 text-[#6B726B] text-xs">No invoices created yet today</div>
             ) : (
               data.recentBills.map((b) => (
                 <div
                   key={b.id}
-                  className="p-2.5 bg-zinc-900/60 rounded-xl border border-zinc-800/70 flex items-center justify-between text-xs"
+                  className="p-2.5 bg-[#0E1210] rounded-xl border border-[#202722] flex items-center justify-between text-xs"
                 >
                   <div>
-                    <div className="font-bold text-white flex items-center gap-2">
-                      <span>{b.bill_number}</span>
-                      <span className="text-[10px] px-1.5 py-0.2 bg-zinc-800 text-zinc-300 rounded font-normal">
+                    <div className="font-medium text-[#F0EBDD] flex items-center gap-2">
+                      <span className="font-mono-numbers">{b.bill_number}</span>
+                      <span className="text-[10px] px-1.5 py-0.2 bg-[#131714] text-[#A6AAA3] border border-[#202722] rounded font-normal">
                         {b.bill_type}
                       </span>
                     </div>
-                    <div className="text-[11px] text-zinc-400 mt-0.5">
+                    <div className="text-[11px] text-[#6B726B] mt-0.5">
                       {b.customer_name || "Walk-in"} &bull; {formatTimeIST(b.created_at)}
                     </div>
                   </div>
 
                   <div className="text-right">
-                    <div className="font-bold text-sm text-white font-mono">
+                    <div className="font-mono-numbers font-medium text-sm text-[#F0EBDD]">
                       {formatRupees(b.final_amount_paise)}
                     </div>
                     <span
-                      className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
+                      className={`text-[10px] font-medium px-1.5 py-0.2 rounded ${
                         b.payment_status === "PAID"
-                          ? "bg-emerald-950 text-emerald-400"
+                          ? "bg-[#123B2C] text-[#F0EBDD]"
                           : b.payment_status === "PARTIAL"
-                          ? "bg-blue-950 text-blue-400"
-                          : "bg-amber-950 text-amber-400"
+                          ? "bg-[#B69A62]/20 text-[#B69A62]"
+                          : "bg-red-950/40 text-red-300"
                       }`}
                     >
                       {b.payment_status}
@@ -514,43 +538,43 @@ export function HomeView({
         </div>
 
         {/* Top Debtors / Outstanding Credit */}
-        <div className="bg-[#0f1420] border border-zinc-800/80 rounded-2xl p-4 sm:p-5">
-          <div className="flex items-center justify-between mb-3 pb-2 border-b border-zinc-800">
-            <h3 className="font-bold text-white text-sm">Customers With Udhaar (Baki)</h3>
+        <div className="bg-[#131714] border border-[#202722] rounded-2xl p-4 sm:p-5">
+          <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#202722]">
+            <h3 className="font-display font-semibold text-sm text-[#F0EBDD]">Player Credit Ledger</h3>
             <button
               type="button"
               onClick={() => onNavigateTab("customers")}
-              className="text-xs text-amber-400 hover:underline flex items-center gap-1"
+              className="text-xs text-[#B69A62] hover:underline flex items-center gap-1 cursor-pointer"
             >
-              <span>Manage Customers</span>
+              <span>View All</span>
               <ArrowRight className="w-3 h-3" />
             </button>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {data.topDebtors.length === 0 ? (
-              <div className="text-center py-6 text-zinc-500 text-xs">
-                Zero outstanding credit! All players settled.
+              <div className="text-center py-6 text-[#6B726B] text-xs">
+                Zero outstanding credit. All accounts settled.
               </div>
             ) : (
               data.topDebtors.map((d) => (
                 <div
                   key={d.id}
-                  className="p-2.5 bg-zinc-900/60 rounded-xl border border-zinc-800/70 flex items-center justify-between text-xs"
+                  className="p-2.5 bg-[#0E1210] rounded-xl border border-[#202722] flex items-center justify-between text-xs"
                 >
                   <div>
-                    <div className="font-bold text-white">{d.name}</div>
-                    <div className="text-[11px] text-zinc-400">{d.phone || "No phone recorded"}</div>
+                    <div className="font-medium text-[#F0EBDD]">{d.name}</div>
+                    <div className="text-[11px] text-[#6B726B]">{d.phone || "No phone recorded"}</div>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-sm text-amber-400 font-mono">
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-mono-numbers font-medium text-sm text-[#B69A62]">
                       {formatRupees(d.outstanding_credit_paise)}
                     </span>
                     <button
                       type="button"
                       onClick={onCollectUdhaar}
-                      className="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-lg text-xs font-semibold"
+                      className="px-2.5 py-1 bg-[#131714] hover:bg-[#181E19] text-[#B69A62] border border-[#B69A62]/30 rounded-lg text-xs font-medium transition-colors cursor-pointer"
                     >
                       Collect
                     </button>
@@ -564,3 +588,4 @@ export function HomeView({
     </div>
   );
 }
+

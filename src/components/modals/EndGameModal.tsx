@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Clock, DollarSign, Smartphone, Layers, AlertCircle, Check, User } from "lucide-react";
+import { Clock, DollarSign, Smartphone, Layers, AlertCircle, Check, User, X } from "lucide-react";
 import { formatRupees, rupeesToPaise } from "@/lib/utils/money";
 import { formatDurationMinutes, calculateElapsedMinutes } from "@/lib/utils/date";
 import type { GameSessionItem, PaymentMethod, CustomerItem } from "@/lib/types";
@@ -113,70 +113,70 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#101522] border border-zinc-800 rounded-2xl max-w-lg w-full max-h-[92vh] flex flex-col text-zinc-100 shadow-2xl animate-in fade-in zoom-in-95">
+      <div className="bg-[#131714] border border-[#222823] rounded-lg max-w-lg w-full max-h-[92vh] flex flex-col text-[#F0EBDD] shadow-2xl">
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-zinc-800 flex items-center justify-between shrink-0">
+        <div className="p-5 border-b border-[#222823] flex items-center justify-between shrink-0">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-              End Game &amp; Finalize Bill
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-semibold text-[#B69A62]">
+              Conclude Session &amp; Settle Invoice
             </span>
-            <h3 className="text-lg font-black text-white">
+            <h3 className="text-xl font-serif font-bold text-[#F0EBDD] mt-0.5">
               {session.table_name || "Game Session"}
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-zinc-400 hover:text-white p-1 text-xl font-bold"
+            className="text-[#A6AAA3] hover:text-[#F0EBDD] p-1 transition-colors"
           >
-            &times;
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mx-4 mt-3 p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-xs text-red-300 flex items-start gap-2 shrink-0">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <div className="mx-5 mt-4 p-3 bg-rose-950/40 border border-rose-800/50 rounded text-xs text-rose-300 flex items-start gap-2 shrink-0">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="p-4 overflow-y-auto flex-1 space-y-4">
-          {/* Bill Summary Card */}
-          <div className="bg-zinc-900/90 rounded-xl border border-zinc-800 p-4 space-y-3">
-            <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80">
-              <div className="flex items-center gap-2 text-zinc-300 text-xs">
-                <Clock className="w-4 h-4 text-emerald-400" />
-                <span>Elapsed Duration:</span>
+        <form onSubmit={handleSubmit} className="p-5 overflow-y-auto flex-1 space-y-4">
+          {/* Bill Summary Statement */}
+          <div className="bg-[#0B0D0C] rounded-lg border border-[#222823] p-4 space-y-3.5">
+            <div className="flex items-center justify-between pb-3 border-b border-[#222823]">
+              <div className="flex items-center gap-2 text-[#A6AAA3] text-xs">
+                <Clock className="w-3.5 h-3.5 text-[#187653]" />
+                <span>Elapsed Play Duration:</span>
               </div>
-              <div className="font-mono font-bold text-base text-white">
+              <div className="font-mono font-bold text-sm text-[#F0EBDD]">
                 {formatDurationMinutes(durationMinutes)} ({durationMinutes} mins)
               </div>
             </div>
 
             {/* Line items */}
-            <div className="space-y-1.5 text-xs text-zinc-300">
+            <div className="space-y-2 text-xs text-[#A6AAA3]">
               <div className="flex items-center justify-between">
-                <span>Table Charge ({formatRupees(hourlyRatePaise)}/hr):</span>
-                <span className="font-semibold text-white">{formatRupees(tableChargePaise)}</span>
+                <span>Table Play Charge ({formatRupees(hourlyRatePaise)}/hr):</span>
+                <span className="font-mono font-medium text-[#F0EBDD]">{formatRupees(tableChargePaise)}</span>
               </div>
 
               {itemsChargePaise > 0 && (
-                <div className="flex items-center justify-between text-amber-300">
-                  <span>Add-on Products (Drinks, Snacks):</span>
-                  <span className="font-semibold">{formatRupees(itemsChargePaise)}</span>
+                <div className="flex items-center justify-between text-[#B69A62]">
+                  <span>Lounge Orders (Drinks, Snacks):</span>
+                  <span className="font-mono font-medium">{formatRupees(itemsChargePaise)}</span>
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-1 border-t border-zinc-800 font-semibold">
-                <span>Subtotal:</span>
-                <span className="text-white">{formatRupees(subtotalPaise)}</span>
+              <div className="flex items-center justify-between pt-2 border-t border-[#222823] text-xs">
+                <span className="text-[#A6AAA3]">Subtotal:</span>
+                <span className="font-mono font-semibold text-[#F0EBDD]">{formatRupees(subtotalPaise)}</span>
               </div>
             </div>
 
             {/* Discount Input */}
-            <div className="pt-2 flex items-center justify-between gap-4">
-              <label className="text-xs font-semibold text-zinc-400 shrink-0">
-                Discount (₹):
+            <div className="pt-2 flex items-center justify-between gap-4 border-t border-[#222823]/60">
+              <label className="text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] shrink-0">
+                Discretionary Discount (₹):
               </label>
               <input
                 type="number"
@@ -184,16 +184,16 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
                 step="1"
                 value={discountRupees}
                 onChange={(e) => setDiscountRupees(e.target.value)}
-                className="w-28 px-3 py-1.5 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-lg text-sm text-right font-bold text-emerald-400 outline-none"
+                className="w-28 px-3 py-1.5 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-sm text-right font-mono font-bold text-[#F0EBDD] outline-none"
               />
             </div>
 
             {/* Final Total Amount Banner */}
-            <div className="p-3 bg-emerald-950/40 border border-emerald-600/40 rounded-xl flex items-center justify-between">
-              <span className="text-xs uppercase font-bold tracking-wider text-emerald-300">
-                Final Bill Amount:
+            <div className="p-3.5 bg-[#123B2C]/40 border border-[#187653]/40 rounded-lg flex items-center justify-between">
+              <span className="text-[10px] uppercase font-mono tracking-[0.2em] font-bold text-[#B69A62]">
+                Final Due Amount:
               </span>
-              <span className="text-2xl font-black text-white">
+              <span className="text-2xl font-mono font-bold text-[#F0EBDD]">
                 {formatRupees(finalAmountPaise)}
               </span>
             </div>
@@ -201,33 +201,33 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
 
           {/* Payment Method Selector */}
           <div>
-            <label className="block text-xs font-bold text-zinc-300 uppercase tracking-wider mb-2">
-              Select Payment Method
+            <label className="block text-[10px] uppercase font-mono tracking-[0.2em] text-[#A6AAA3] font-semibold mb-2">
+              Payment Settlement Method
             </label>
             <div className="grid grid-cols-4 gap-2">
               <button
                 type="button"
                 onClick={() => setPaymentMethod("CASH")}
-                className={`py-3 px-2 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2.5 px-2 rounded border flex flex-col items-center justify-center gap-1 transition-colors ${
                   paymentMethod === "CASH"
-                    ? "bg-emerald-600 text-white border-emerald-500 shadow-md font-bold"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800 hover:text-white"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <DollarSign className="w-4 h-4" />
+                <DollarSign className="w-3.5 h-3.5" />
                 <span className="text-xs">Cash</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setPaymentMethod("UPI")}
-                className={`py-3 px-2 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2.5 px-2 rounded border flex flex-col items-center justify-center gap-1 transition-colors ${
                   paymentMethod === "UPI"
-                    ? "bg-emerald-600 text-white border-emerald-500 shadow-md font-bold"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800 hover:text-white"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <Smartphone className="w-4 h-4" />
+                <Smartphone className="w-3.5 h-3.5" />
                 <span className="text-xs">UPI</span>
               </button>
 
@@ -239,26 +239,26 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
                   setSplitCashRupees(String(half));
                   setSplitUpiRupees(String(Math.round(finalAmountPaise / 100) - half));
                 }}
-                className={`py-3 px-2 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2.5 px-2 rounded border flex flex-col items-center justify-center gap-1 transition-colors ${
                   paymentMethod === "SPLIT"
-                    ? "bg-emerald-600 text-white border-emerald-500 shadow-md font-bold"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800 hover:text-white"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <Layers className="w-4 h-4" />
+                <Layers className="w-3.5 h-3.5" />
                 <span className="text-xs">Split</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setPaymentMethod("CREDIT")}
-                className={`py-3 px-2 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2.5 px-2 rounded border flex flex-col items-center justify-center gap-1 transition-colors ${
                   paymentMethod === "CREDIT"
-                    ? "bg-amber-600 text-white border-amber-500 shadow-md font-bold"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800 hover:text-white"
+                    ? "bg-[#B69A62] text-[#0B0D0C] border-[#B69A62] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <User className="w-4 h-4" />
+                <User className="w-3.5 h-3.5" />
                 <span className="text-xs">Udhaar</span>
               </button>
             </div>
@@ -266,10 +266,10 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
 
           {/* Split Amount Inputs if SPLIT selected */}
           {paymentMethod === "SPLIT" && (
-            <div className="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 grid grid-cols-2 gap-3">
+            <div className="p-3 bg-[#0B0D0C] rounded border border-[#222823] grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-zinc-400 mb-1">
-                  Cash Amount (₹):
+                <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1">
+                  Cash Intake (₹):
                 </label>
                 <input
                   type="number"
@@ -277,13 +277,13 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
                   step="1"
                   value={splitCashRupees}
                   onChange={(e) => setSplitCashRupees(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-lg text-sm font-bold text-white outline-none"
+                  className="w-full px-3 py-2 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-sm font-mono font-bold text-[#F0EBDD] outline-none"
                   required
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-zinc-400 mb-1">
-                  UPI Amount (₹):
+                <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1">
+                  UPI Intake (₹):
                 </label>
                 <input
                   type="number"
@@ -291,7 +291,7 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
                   step="1"
                   value={splitUpiRupees}
                   onChange={(e) => setSplitUpiRupees(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-lg text-sm font-bold text-emerald-400 outline-none"
+                  className="w-full px-3 py-2 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-sm font-mono font-bold text-[#F0EBDD] outline-none"
                   required
                 />
               </div>
@@ -300,21 +300,21 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
 
           {/* Customer Selection (Mandatory for Udhaar, optional otherwise) */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-              Customer Account {paymentMethod === "CREDIT" && <span className="text-red-400">* (Required for Udhaar)</span>}
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+              Player Account {paymentMethod === "CREDIT" && <span className="text-rose-400">* (Required for Udhaar ledger)</span>}
             </label>
             <div className="relative">
               <select
                 value={selectedCustomerId}
                 onChange={(e) => setSelectedCustomerId(e.target.value)}
-                className={`w-full px-3 py-2.5 bg-[#090d14] border rounded-xl text-sm text-white outline-none appearance-none ${
+                className={`w-full px-3 py-2.5 bg-[#0B0D0C] border rounded text-xs text-[#F0EBDD] outline-none appearance-none ${
                   paymentMethod === "CREDIT" && !selectedCustomerId
-                    ? "border-amber-500 ring-1 ring-amber-500/50"
-                    : "border-zinc-800 focus:border-emerald-500"
+                    ? "border-[#B69A62] ring-1 ring-[#B69A62]/40"
+                    : "border-[#222823] focus:border-[#187653]"
                 }`}
                 required={paymentMethod === "CREDIT"}
               >
-                <option value="">-- {paymentMethod === "CREDIT" ? "Select Registered Customer" : "Casual Walk-in Player"} --</option>
+                <option value="">-- {paymentMethod === "CREDIT" ? "Select Registered Player Account" : "Casual Walk-in Guest"} --</option>
                 {customers.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name} {c.phone ? `(${c.phone})` : ""} {c.outstanding_credit_paise > 0 ? `[Current Udhaar: ${formatRupees(c.outstanding_credit_paise)}]` : ""}
@@ -326,15 +326,15 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-400 mb-1">
-              Remarks (Optional)
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1">
+              Audit Remarks (Optional)
             </label>
             <input
               type="text"
-              placeholder="e.g. Paid via GPay, settled full"
+              placeholder="e.g. Paid via GPay, settled in full"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none"
+              className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
             />
           </div>
 
@@ -343,21 +343,21 @@ export function EndGameModal({ session, isOpen, onClose, onSuccess }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="w-1/3 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl font-semibold text-sm transition-all"
+              className="w-1/3 py-2.5 px-3 bg-[#0B0D0C] hover:bg-[#1a201c] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823] rounded font-medium text-xs transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="w-2/3 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 text-white font-black text-sm rounded-xl transition-all shadow-lg shadow-emerald-950/60 flex items-center justify-center gap-2"
+              className="w-2/3 py-2.5 px-4 bg-[#187653] hover:bg-[#1f8c63] disabled:opacity-50 text-[#F0EBDD] font-medium text-xs rounded transition-colors flex items-center justify-center gap-2 active:scale-[0.98]"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#F0EBDD]/30 border-t-[#F0EBDD] rounded-full animate-spin" />
               ) : (
                 <>
-                  <Check className="w-5 h-5" />
-                  <span>Settle Bill &amp; Free Table</span>
+                  <Check className="w-4 h-4 text-[#B69A62]" />
+                  <span>Settle Bill &amp; Release Table</span>
                 </>
               )}
             </button>

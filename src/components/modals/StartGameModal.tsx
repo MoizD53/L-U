@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Play, User, Plus, Check } from "lucide-react";
+import { Play, User, Plus, Check, X } from "lucide-react";
 import { formatRupees } from "@/lib/utils/money";
 import type { TableItem, CustomerItem } from "@/lib/types";
 
@@ -92,41 +92,41 @@ export function StartGameModal({ table, isOpen, onClose, onSuccess }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#101522] border border-zinc-800 rounded-2xl max-w-md w-full p-6 text-zinc-100 shadow-2xl animate-in fade-in zoom-in-95">
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+      <div className="bg-[#131714] border border-[#222823] rounded-lg max-w-md w-full p-6 text-[#F0EBDD] shadow-2xl">
+        <div className="flex items-center justify-between pb-4 border-b border-[#222823]">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-              Start {table.type} Session
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-semibold text-[#B69A62]">
+              Initiate {table.type} Session
             </span>
-            <h3 className="text-lg font-black text-white">{table.name}</h3>
+            <h3 className="text-xl font-serif font-bold text-[#F0EBDD] mt-0.5">{table.name}</h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-zinc-400 hover:text-white p-1 text-xl font-bold"
+            className="text-[#A6AAA3] hover:text-[#F0EBDD] p-1 transition-colors"
           >
-            &times;
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-xs text-red-300">
+          <div className="mt-4 p-3 bg-rose-950/40 border border-rose-800/50 rounded text-xs text-rose-300">
             {error}
           </div>
         )}
 
         <form onSubmit={handleStart} className="space-y-4 pt-4">
           {/* Rate Summary Card */}
-          <div className="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 flex items-center justify-between text-xs">
+          <div className="p-3.5 bg-[#0B0D0C] rounded border border-[#222823] flex items-center justify-between text-xs">
             <div>
-              <div className="text-zinc-400">Applicable Rate:</div>
-              <div className="font-bold text-white text-sm">
+              <div className="text-[10px] uppercase tracking-wider text-[#A6AAA3]">Applicable Tariff</div>
+              <div className="font-mono font-bold text-[#F0EBDD] text-sm mt-0.5">
                 {formatRupees(table.hourly_rate_paise || (table.type === "POOL" ? 20000 : 35000))}/hr
               </div>
             </div>
             <div className="text-right">
-              <div className="text-zinc-400">Minimum Charge:</div>
-              <div className="font-semibold text-emerald-400">
+              <div className="text-[10px] uppercase tracking-wider text-[#A6AAA3]">Minimum Fee</div>
+              <div className="font-mono font-semibold text-[#B69A62] text-sm mt-0.5">
                 {formatRupees(table.minimum_charge_paise || (table.type === "POOL" ? 5000 : 10000))}
               </div>
             </div>
@@ -135,35 +135,35 @@ export function StartGameModal({ table, isOpen, onClose, onSuccess }: Props) {
           {/* Customer Selection */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-semibold text-zinc-300">
-                Customer (Optional for casual games)
+              <label className="text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3]">
+                Assigned Player (Optional)
               </label>
               <button
                 type="button"
                 onClick={() => setIsCreatingNew(!isCreatingNew)}
-                className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+                className="text-xs font-medium text-[#187653] hover:text-[#1f8c63] flex items-center gap-1 transition-colors"
               >
                 {isCreatingNew ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
-                <span>{isCreatingNew ? "Select Existing" : "+ New Customer"}</span>
+                <span>{isCreatingNew ? "Select Existing" : "+ New Player"}</span>
               </button>
             </div>
 
             {isCreatingNew ? (
-              <div className="space-y-2 p-3 bg-zinc-900/60 rounded-xl border border-zinc-800">
+              <div className="space-y-2.5 p-3 bg-[#0B0D0C] rounded border border-[#222823]">
                 <input
                   type="text"
-                  placeholder="Customer Name (e.g. Mohit Patel)"
+                  placeholder="Player Full Name"
                   value={newCustomerName}
                   onChange={(e) => setNewCustomerName(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-lg text-sm text-white placeholder-zinc-500 outline-none"
+                  className="w-full px-3 py-2 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
                   required
                 />
                 <input
                   type="tel"
-                  placeholder="Mobile Number (Optional)"
+                  placeholder="Phone Number (Optional)"
                   value={newCustomerPhone}
                   onChange={(e) => setNewCustomerPhone(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-lg text-sm text-white placeholder-zinc-500 outline-none"
+                  className="w-full px-3 py-2 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
                 />
               </div>
             ) : (
@@ -171,17 +171,17 @@ export function StartGameModal({ table, isOpen, onClose, onSuccess }: Props) {
                 <select
                   value={selectedCustomerId}
                   onChange={(e) => setSelectedCustomerId(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white outline-none appearance-none"
+                  className="w-full px-3 py-2.5 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] outline-none appearance-none"
                 >
-                  <option value="">-- Casual Walk-in Customer --</option>
+                  <option value="">-- Casual Walk-in Guest --</option>
                   {customers.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name} {c.phone ? `(${c.phone})` : ""} {c.outstanding_credit_paise > 0 ? `— Udhaar: ${formatRupees(c.outstanding_credit_paise)}` : ""}
                     </option>
                   ))}
                 </select>
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-zinc-500">
-                  <User className="w-4 h-4" />
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#A6AAA3]">
+                  <User className="w-3.5 h-3.5" />
                 </div>
               </div>
             )}
@@ -189,15 +189,15 @@ export function StartGameModal({ table, isOpen, onClose, onSuccess }: Props) {
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-              Notes (Optional)
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+              Session Notes
             </label>
             <input
               type="text"
-              placeholder="e.g. Tournament practice, 4 players"
+              placeholder="e.g. 4 players, private challenge match"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none"
+              className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
             />
           </div>
 
@@ -205,21 +205,21 @@ export function StartGameModal({ table, isOpen, onClose, onSuccess }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="w-1/3 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xl font-semibold text-sm transition-all"
+              className="w-1/3 py-2.5 px-3 bg-[#0B0D0C] hover:bg-[#1a201c] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823] rounded font-medium text-xs transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="w-2/3 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-all shadow-lg shadow-emerald-950/60 flex items-center justify-center gap-2"
+              className="w-2/3 py-2.5 px-4 bg-[#187653] hover:bg-[#1f8c63] text-[#F0EBDD] font-medium text-xs rounded transition-colors flex items-center justify-center gap-2 active:scale-[0.98]"
             >
               {loading ? (
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#F0EBDD]/30 border-t-[#F0EBDD] rounded-full animate-spin" />
               ) : (
                 <>
-                  <Play className="w-4 h-4 fill-white" />
-                  <span>Start Table Game</span>
+                  <Play className="w-3.5 h-3.5 fill-[#F0EBDD]" />
+                  <span>Commence Session</span>
                 </>
               )}
             </button>

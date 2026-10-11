@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Check, AlertCircle, DollarSign, Smartphone, Layers } from "lucide-react";
+import { Check, AlertCircle, DollarSign, Smartphone, Layers, X } from "lucide-react";
 import { formatRupees, rupeesToPaise } from "@/lib/utils/money";
 import type { CustomerItem, PaymentMethod } from "@/lib/types";
 
@@ -124,26 +124,28 @@ export function CollectUdhaarModal({ preselectedCustomer, isOpen, onClose, onSuc
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#101522] border border-zinc-800 rounded-2xl max-w-md w-full p-6 text-zinc-100 shadow-2xl animate-in fade-in zoom-in-95">
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+      <div className="bg-[#131714] border border-[#222823] rounded-lg max-w-md w-full p-6 text-[#F0EBDD] shadow-2xl">
+        <div className="flex items-center justify-between pb-4 border-b border-[#222823]">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
-              Customer Ledger
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-semibold text-[#B69A62]">
+              Customer Ledger &amp; Repayment
             </span>
-            <h3 className="text-lg font-black text-white">Collect Udhaar Repayment</h3>
+            <h3 className="text-xl font-serif font-bold text-[#F0EBDD] mt-0.5">
+              Collect Udhaar Settlement
+            </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-zinc-400 hover:text-white p-1 text-xl font-bold"
+            className="text-[#A6AAA3] hover:text-[#F0EBDD] p-1 transition-colors"
           >
-            &times;
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-xs text-red-300 flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <div className="mt-4 p-3 bg-rose-950/40 border border-rose-800/50 rounded text-xs text-rose-300 flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
@@ -151,16 +153,16 @@ export function CollectUdhaarModal({ preselectedCustomer, isOpen, onClose, onSuc
         <form onSubmit={handleSubmit} className="space-y-4 pt-4">
           {/* Customer Dropdown */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-              Select Debtor Customer
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+              Select Player Account
             </label>
             <select
               value={selectedCustomerId}
               onChange={(e) => handleSelectCustomer(e.target.value)}
-              className="w-full px-3 py-2.5 bg-[#090d14] border border-zinc-800 focus:border-amber-500 rounded-xl text-sm text-white outline-none"
+              className="w-full px-3 py-2.5 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] outline-none"
               required
             >
-              <option value="">-- Choose Customer --</option>
+              <option value="">-- Choose Registered Player --</option>
               {customers
                 .filter((c) => c.outstanding_credit_paise > 0)
                 .map((c) => (
@@ -173,27 +175,29 @@ export function CollectUdhaarModal({ preselectedCustomer, isOpen, onClose, onSuc
 
           {/* Current Outstanding Banner */}
           {currentCustomer && (
-            <div className="p-3 bg-amber-950/30 border border-amber-600/40 rounded-xl flex items-center justify-between">
+            <div className="p-3.5 bg-[#0B0D0C] border border-[#222823] rounded-lg flex items-center justify-between">
               <div>
-                <span className="text-[11px] text-amber-300 font-semibold">Total Outstanding (Baki):</span>
-                <div className="text-xl font-black text-white">
+                <span className="text-[10px] uppercase tracking-wider text-[#B69A62] font-semibold block">
+                  Outstanding Credit (Baki):
+                </span>
+                <div className="text-xl font-mono font-bold text-[#F0EBDD] mt-0.5">
                   {formatRupees(currentUdhaarPaise)}
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setAmountRupees(String(currentUdhaarPaise / 100))}
-                className="text-xs px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-lg font-semibold"
+                className="text-xs px-3 py-1 bg-[#131714] hover:bg-[#1a201c] text-[#B69A62] border border-[#222823] rounded font-medium transition-colors"
               >
-                Pay Full
+                Clear Entire Balance
               </button>
             </div>
           )}
 
           {/* Amount to Collect Input */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-              Amount Received Now (₹)
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+              Repayment Amount Received (₹)
             </label>
             <input
               type="number"
@@ -202,38 +206,38 @@ export function CollectUdhaarModal({ preselectedCustomer, isOpen, onClose, onSuc
               placeholder="e.g. 500"
               value={amountRupees}
               onChange={(e) => setAmountRupees(e.target.value)}
-              className="w-full px-4 py-3 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-xl text-lg font-bold text-emerald-400 outline-none"
+              className="w-full px-3.5 py-2.5 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-base font-mono font-bold text-[#F0EBDD] outline-none"
               required
             />
           </div>
 
           {/* Payment Method */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-2">
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-2">
               Payment Method Received
             </label>
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => setPaymentMethod("CASH")}
-                className={`py-2.5 px-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "CASH"
-                    ? "bg-emerald-600 text-white border-emerald-500 shadow-md"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <DollarSign className="w-4 h-4" /> Cash
+                <DollarSign className="w-3.5 h-3.5" /> Cash
               </button>
               <button
                 type="button"
                 onClick={() => setPaymentMethod("UPI")}
-                className={`py-2.5 px-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "UPI"
-                    ? "bg-emerald-600 text-white border-emerald-500 shadow-md"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <Smartphone className="w-4 h-4" /> UPI
+                <Smartphone className="w-3.5 h-3.5" /> UPI
               </button>
               <button
                 type="button"
@@ -244,36 +248,36 @@ export function CollectUdhaarModal({ preselectedCustomer, isOpen, onClose, onSuc
                   setSplitCashRupees(String(half));
                   setSplitUpiRupees(String(total - half));
                 }}
-                className={`py-2.5 px-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "SPLIT"
-                    ? "bg-emerald-600 text-white border-emerald-500 shadow-md"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <Layers className="w-4 h-4" /> Split
+                <Layers className="w-3.5 h-3.5" /> Split
               </button>
             </div>
           </div>
 
           {paymentMethod === "SPLIT" && (
-            <div className="grid grid-cols-2 gap-3 p-3 bg-zinc-900 rounded-xl border border-zinc-800">
+            <div className="grid grid-cols-2 gap-3 p-3 bg-[#0B0D0C] rounded border border-[#222823]">
               <div>
-                <label className="text-[11px] text-zinc-400 block mb-1">Cash (₹):</label>
+                <label className="text-[10px] uppercase tracking-wider text-[#A6AAA3] block mb-1">Cash (₹):</label>
                 <input
                   type="number"
                   value={splitCashRupees}
                   onChange={(e) => setSplitCashRupees(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-[#090d14] border border-zinc-800 rounded-lg text-sm text-white outline-none"
+                  className="w-full px-3 py-1.5 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-sm font-mono text-[#F0EBDD] outline-none"
                   required
                 />
               </div>
               <div>
-                <label className="text-[11px] text-zinc-400 block mb-1">UPI (₹):</label>
+                <label className="text-[10px] uppercase tracking-wider text-[#A6AAA3] block mb-1">UPI (₹):</label>
                 <input
                   type="number"
                   value={splitUpiRupees}
                   onChange={(e) => setSplitUpiRupees(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-[#090d14] border border-zinc-800 rounded-lg text-sm text-white outline-none"
+                  className="w-full px-3 py-1.5 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-sm font-mono text-[#F0EBDD] outline-none"
                   required
                 />
               </div>
@@ -282,15 +286,15 @@ export function CollectUdhaarModal({ preselectedCustomer, isOpen, onClose, onSuc
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-400 mb-1">
-              Remarks (Optional)
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1">
+              Audit Notes (Optional)
             </label>
             <input
               type="text"
               placeholder="e.g. Cleared weekend pool balance"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-emerald-500 rounded-xl text-sm text-white outline-none"
+              className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
             />
           </div>
 
@@ -298,21 +302,21 @@ export function CollectUdhaarModal({ preselectedCustomer, isOpen, onClose, onSuc
             <button
               type="button"
               onClick={onClose}
-              className="w-1/3 py-3 px-4 bg-zinc-800 text-zinc-300 rounded-xl font-semibold text-sm"
+              className="w-1/3 py-2.5 px-3 bg-[#0B0D0C] hover:bg-[#1a201c] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823] rounded font-medium text-xs transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="w-2/3 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-950/60 flex items-center justify-center gap-2"
+              className="w-2/3 py-2.5 px-4 bg-[#187653] hover:bg-[#1f8c63] disabled:opacity-40 text-[#F0EBDD] font-medium text-xs rounded transition-colors flex items-center justify-center gap-2 active:scale-[0.98]"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#F0EBDD]/30 border-t-[#F0EBDD] rounded-full animate-spin" />
               ) : (
                 <>
-                  <Check className="w-4 h-4" />
-                  <span>Confirm Repayment</span>
+                  <Check className="w-3.5 h-3.5 text-[#B69A62]" />
+                  <span>Confirm Settlement</span>
                 </>
               )}
             </button>

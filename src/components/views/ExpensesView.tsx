@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Plus, Receipt, DollarSign, Smartphone, Wallet, Building2, User } from "lucide-react";
+import { Plus, Receipt, DollarSign, Smartphone, Wallet, Building2, User, ArrowDownRight } from "lucide-react";
 import { formatRupees } from "@/lib/utils/money";
 import { formatDateIST, formatTimeIST } from "@/lib/utils/date";
 import type { ExpenseItem } from "@/lib/types";
@@ -42,63 +42,73 @@ export function ExpensesView({ onAddExpense }: Props) {
     .reduce((sum, e) => sum + e.amount_paise, 0);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-16">
+    <div className="space-y-7 max-w-7xl mx-auto pb-16">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#222823] pb-5">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Arena Expenses &amp; Outflows
+          <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#B69A62]">
+            Dahod Financial Outflows
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#F0EBDD] tracking-tight mt-1">
+            Expenses &amp; Disbursements
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
-            Track salaries, advances, rent, electricity, equipment &amp; drawer cash outflows
+          <p className="text-xs text-[#A6AAA3] mt-1 max-w-xl">
+            Maintain disciplined records of arena supplies, salaries, rent, maintenance, and counter cash withdrawals.
           </p>
         </div>
 
         <button
           type="button"
           onClick={onAddExpense}
-          className="py-2.5 px-4 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 self-start sm:self-auto active:scale-95"
+          className="py-2.5 px-4 bg-[#187653] hover:bg-[#1f8c63] text-[#F0EBDD] rounded-lg text-xs font-semibold tracking-wide transition-colors border border-[#187653]/60 shadow-sm flex items-center gap-2 self-start sm:self-auto active:scale-[0.98]"
         >
-          <Plus className="w-4 h-4" />
-          <span>+ Add Expense</span>
+          <Plus className="w-3.5 h-3.5 text-[#B69A62]" />
+          <span>Record Expense</span>
         </button>
       </div>
 
-      {/* KPI Cards */}
+      {/* KPI Overview - Editorial 3-Column Ledger */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 bg-[#0f1420] border border-zinc-800 rounded-2xl">
-          <span className="text-xs font-semibold text-zinc-400 block mb-1">
-            Total Filtered Expenses
+        <div className="p-5 bg-[#131714] border border-[#222823] rounded-lg">
+          <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#A6AAA3] block mb-2">
+            Total Filtered Outflow
           </span>
-          <div className="text-2xl font-black text-white font-mono">
+          <div className="text-2xl font-mono font-bold text-[#F0EBDD]">
             {formatRupees(totalExpensePaise)}
           </div>
-          <span className="text-[11px] text-zinc-500 mt-1 block">
-            {expenses.length} expense record(s)
+          <span className="text-[11px] text-[#A6AAA3] mt-2 block font-mono">
+            {expenses.length} disbursement record{expenses.length === 1 ? "" : "s"}
           </span>
         </div>
 
-        <div className="p-4 bg-amber-950/20 border border-amber-600/40 rounded-2xl">
-          <span className="text-xs font-semibold text-amber-300 block mb-1">
-            Deducted from Drawer Cash
-          </span>
-          <div className="text-2xl font-black text-amber-400 font-mono">
+        <div className="p-5 bg-[#131714] border border-[#222823] rounded-lg relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#B69A62]/40" />
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#B69A62] block">
+              Deducted From Drawer Cash
+            </span>
+            <Wallet className="w-3.5 h-3.5 text-[#B69A62]" />
+          </div>
+          <div className="text-2xl font-mono font-bold text-[#F0EBDD]">
             {formatRupees(drawerCashExpensesPaise)}
           </div>
-          <span className="text-[11px] text-zinc-400 mt-1 block">
-            Reduces expected closing rokad
+          <span className="text-[11px] text-[#A6AAA3] mt-2 block">
+            Directly reduces closing physical drawer rokad
           </span>
         </div>
 
-        <div className="p-4 bg-blue-950/20 border border-blue-800/40 rounded-2xl">
-          <span className="text-xs font-semibold text-blue-300 block mb-1">
-            Paid via UPI / Bank
-          </span>
-          <div className="text-2xl font-black text-blue-400 font-mono">
+        <div className="p-5 bg-[#131714] border border-[#222823] rounded-lg">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#A6AAA3] block">
+              Disbursed Via UPI / Bank
+            </span>
+            <Smartphone className="w-3.5 h-3.5 text-[#187653]" />
+          </div>
+          <div className="text-2xl font-mono font-bold text-[#F0EBDD]">
             {formatRupees(upiExpensesPaise)}
           </div>
-          <span className="text-[11px] text-zinc-400 mt-1 block">
-            Paid from online bank account
+          <span className="text-[11px] text-[#A6AAA3] mt-2 block">
+            Arena online bank settlements
           </span>
         </div>
       </div>
@@ -108,10 +118,10 @@ export function ExpensesView({ onAddExpense }: Props) {
         <button
           type="button"
           onClick={() => setCategoryFilter("ALL")}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+          className={`px-3.5 py-1.5 rounded text-xs font-medium tracking-wide transition-all whitespace-nowrap ${
             categoryFilter === "ALL"
-              ? "bg-rose-600 text-white shadow-sm"
-              : "bg-[#0f1420] text-zinc-400 hover:text-white border border-zinc-800"
+              ? "bg-[#187653] text-[#F0EBDD] font-semibold shadow-sm"
+              : "bg-[#131714] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823]"
           }`}
         >
           All Categories
@@ -121,10 +131,10 @@ export function ExpensesView({ onAddExpense }: Props) {
             key={cat.id}
             type="button"
             onClick={() => setCategoryFilter(cat.id)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`px-3.5 py-1.5 rounded text-xs font-medium tracking-wide transition-all whitespace-nowrap ${
               categoryFilter === cat.id
-                ? "bg-rose-600 text-white shadow-sm"
-                : "bg-[#0f1420] text-zinc-400 hover:text-white border border-zinc-800"
+                ? "bg-[#187653] text-[#F0EBDD] font-semibold shadow-sm"
+                : "bg-[#131714] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823]"
             }`}
           >
             {cat.name}
@@ -132,81 +142,79 @@ export function ExpensesView({ onAddExpense }: Props) {
         ))}
       </div>
 
-      {/* Expenses Table / List */}
-      <div className="bg-[#0f1420] border border-zinc-800/80 rounded-2xl overflow-hidden shadow-xl">
-        <div className="p-4 border-b border-zinc-800 flex items-center justify-between font-bold text-xs text-zinc-400">
-          <span>Expense Details</span>
-          <span>Amount</span>
+      {/* Expenses Ledger */}
+      <div className="bg-[#131714] border border-[#222823] rounded-lg overflow-hidden">
+        <div className="p-4 border-b border-[#222823] flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-[#A6AAA3] font-semibold">
+          <span>Expense Details &amp; Voucher</span>
+          <span>Amount Disbursed</span>
         </div>
 
-        <div className="divide-y divide-zinc-800/60">
-          {expenses.length === 0 ? (
-            <div className="p-12 text-center text-xs text-zinc-500">
-              No expenses recorded for this category
+        <div className="divide-y divide-[#222823]">
+          {loading ? (
+            <div className="p-12 text-center text-xs text-[#A6AAA3]">
+              Loading expense records...
+            </div>
+          ) : expenses.length === 0 ? (
+            <div className="p-12 text-center text-xs text-[#A6AAA3]">
+              No expenses recorded under this category
             </div>
           ) : (
             expenses.map((exp) => (
               <div
                 key={exp.id}
-                className="p-4 hover:bg-zinc-900/40 transition-colors flex items-center justify-between text-xs"
+                className="p-4 hover:bg-[#181d1a]/50 transition-colors flex items-center justify-between text-xs"
               >
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-sm text-white">{exp.title}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-semibold border border-zinc-700">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-semibold text-sm text-[#F0EBDD]">{exp.title}</span>
+                    <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#0B0D0C] text-[#A6AAA3] font-medium border border-[#222823]">
                       {exp.category_name}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-3 text-[11px] text-zinc-400">
-                    <span>
-                      {formatDateIST(exp.expense_date)}, {formatTimeIST(exp.expense_date)}
+                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#A6AAA3]">
+                    <span className="font-mono">
+                      {formatDateIST(exp.expense_date)} &middot; {formatTimeIST(exp.expense_date)}
                     </span>
-                    {exp.payee && <span>&bull; Paid to: <strong className="text-zinc-200">{exp.payee}</strong></span>}
+                    {exp.payee && (
+                      <span>
+                        Recipient: <strong className="text-[#F0EBDD] font-medium">{exp.payee}</strong>
+                      </span>
+                    )}
                   </div>
 
                   {exp.notes && (
-                    <div className="text-[11px] text-zinc-400 italic">
+                    <div className="text-[11px] text-[#A6AAA3]/80 italic">
                       &quot;{exp.notes}&quot;
                     </div>
                   )}
 
                   {/* Payment Source Badges */}
-                  <div className="flex items-center gap-1.5 pt-1">
-                    <span
-                      className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        exp.payment_method === "CASH"
-                          ? "bg-amber-950 text-amber-300 border border-amber-800/40"
-                          : "bg-blue-950 text-blue-300 border border-blue-800/40"
-                      }`}
-                    >
-                      {exp.payment_method === "CASH" ? <DollarSign className="w-3 h-3" /> : <Smartphone className="w-3 h-3" />}
+                  <div className="flex items-center gap-2 pt-0.5">
+                    <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-[#0B0D0C] text-[#A6AAA3] border border-[#222823]">
+                      {exp.payment_method === "CASH" ? (
+                        <DollarSign className="w-2.5 h-2.5 text-[#B69A62]" />
+                      ) : (
+                        <Smartphone className="w-2.5 h-2.5 text-[#187653]" />
+                      )}
                       <span>{exp.payment_method}</span>
                     </span>
 
-                    <span
-                      className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full border ${
-                        exp.paid_by === "BUSINESS_DRAWER"
-                          ? "bg-zinc-800 text-amber-300 border-amber-600/30 font-semibold"
-                          : exp.paid_by === "PERSONAL_FUNDS"
-                          ? "bg-zinc-800 text-blue-300 border-blue-600/30 font-semibold"
-                          : "bg-zinc-800 text-purple-300 border-purple-600/30 font-semibold"
-                      }`}
-                    >
+                    <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded bg-[#0B0D0C] text-[#A6AAA3] border border-[#222823]">
                       {exp.paid_by === "BUSINESS_DRAWER" ? (
                         <>
-                          <Wallet className="w-2.5 h-2.5" />
-                          <span>Shop Drawer</span>
+                          <Wallet className="w-2.5 h-2.5 text-[#B69A62]" />
+                          <span className="text-[#B69A62]">Drawer Cash (Rokad)</span>
                         </>
                       ) : exp.paid_by === "PERSONAL_FUNDS" ? (
                         <>
-                          <User className="w-2.5 h-2.5" />
-                          <span>Personal Funds</span>
+                          <User className="w-2.5 h-2.5 text-[#187653]" />
+                          <span>Owner Personal Funds</span>
                         </>
                       ) : (
                         <>
-                          <Building2 className="w-2.5 h-2.5" />
-                          <span>Bank</span>
+                          <Building2 className="w-2.5 h-2.5 text-[#187653]" />
+                          <span>Arena Bank Account</span>
                         </>
                       )}
                     </span>
@@ -214,8 +222,9 @@ export function ExpensesView({ onAddExpense }: Props) {
                 </div>
 
                 <div className="text-right">
-                  <div className="font-mono font-bold text-base text-rose-400">
-                    -{formatRupees(exp.amount_paise)}
+                  <div className="font-mono font-bold text-sm sm:text-base text-[#F0EBDD] flex items-center justify-end gap-0.5">
+                    <ArrowDownRight className="w-3.5 h-3.5 text-[#A6AAA3]" />
+                    <span>{formatRupees(exp.amount_paise)}</span>
                   </div>
                 </div>
               </div>

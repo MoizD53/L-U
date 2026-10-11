@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Plus, Minus, Check, AlertCircle, DollarSign, Smartphone, Layers, User } from "lucide-react";
+import { Plus, Minus, Check, AlertCircle, DollarSign, Smartphone, Layers, User, X } from "lucide-react";
 import { formatRupees, rupeesToPaise } from "@/lib/utils/money";
 import type { ProductItem, PaymentMethod, CustomerItem } from "@/lib/types";
 
@@ -126,41 +126,43 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#101522] border border-zinc-800 rounded-2xl max-w-xl w-full max-h-[92vh] flex flex-col text-zinc-100 shadow-2xl animate-in fade-in zoom-in-95">
-        <div className="p-4 border-b border-zinc-800 flex items-center justify-between shrink-0">
+      <div className="bg-[#131714] border border-[#222823] rounded-lg max-w-xl w-full max-h-[92vh] flex flex-col text-[#F0EBDD] shadow-2xl">
+        <div className="p-5 border-b border-[#222823] flex items-center justify-between shrink-0">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-              Direct Counter Sale
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-semibold text-[#B69A62]">
+              Retail POS &amp; Counter Dispatch
             </span>
-            <h3 className="text-lg font-black text-white">Sell Snacks, Drinks &amp; Cigarettes</h3>
+            <h3 className="text-xl font-serif font-bold text-[#F0EBDD] mt-0.5">
+              Direct Lounge Counter Sale
+            </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-zinc-400 hover:text-white p-1 text-xl font-bold"
+            className="text-[#A6AAA3] hover:text-[#F0EBDD] p-1 transition-colors"
           >
-            &times;
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mx-4 mt-3 p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-xs text-red-300 flex items-start gap-2 shrink-0">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <div className="mx-5 mt-4 p-3 bg-rose-950/40 border border-rose-800/50 rounded text-xs text-rose-300 flex items-start gap-2 shrink-0">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {/* Category Pills */}
-        <div className="px-4 py-2 border-b border-zinc-800 flex items-center gap-1.5 overflow-x-auto shrink-0 scrollbar-none">
+        <div className="px-5 py-2.5 border-b border-[#222823] flex items-center gap-1.5 overflow-x-auto shrink-0 scrollbar-none">
           {categories.map((cat) => (
             <button
               key={cat}
               type="button"
               onClick={() => setCategoryFilter(cat)}
-              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`px-3 py-1 rounded text-xs font-medium tracking-wide whitespace-nowrap transition-colors ${
                 categoryFilter === cat
-                  ? "bg-emerald-600 text-white shadow-sm"
-                  : "bg-zinc-900 text-zinc-400 hover:text-zinc-200"
+                  ? "bg-[#187653] text-[#F0EBDD] font-semibold shadow-sm"
+                  : "bg-[#0B0D0C] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823]"
               }`}
             >
               {cat}
@@ -170,7 +172,7 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
 
         <form onSubmit={handleSubmit} className="flex-1 flex flex-col overflow-hidden">
           {/* Product Items */}
-          <div className="p-4 overflow-y-auto flex-1 space-y-2">
+          <div className="p-5 overflow-y-auto flex-1 space-y-2.5">
             {filteredProducts.map((prod) => {
               const qty = cart[prod.id] || 0;
               const isOut = prod.current_stock <= 0;
@@ -178,43 +180,41 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
               return (
                 <div
                   key={prod.id}
-                  className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
+                  className={`p-3 rounded-lg border flex items-center justify-between transition-colors ${
                     qty > 0
-                      ? "bg-emerald-950/30 border-emerald-500/40"
-                      : "bg-zinc-900/60 border-zinc-800/80"
+                      ? "bg-[#123B2C]/30 border-[#187653]/60"
+                      : "bg-[#0B0D0C] border-[#222823]"
                   } ${isOut ? "opacity-40 pointer-events-none" : ""}`}
                 >
                   <div>
-                    <div className="font-bold text-sm text-white">{prod.name}</div>
-                    <div className="text-xs text-zinc-400 mt-0.5">
-                      <span className="font-semibold text-emerald-400">
+                    <div className="font-semibold text-sm text-[#F0EBDD]">{prod.name}</div>
+                    <div className="text-xs text-[#A6AAA3] mt-0.5 flex items-center gap-1.5">
+                      <span className="font-mono font-medium text-[#F0EBDD]">
                         {formatRupees(prod.selling_price_paise)}
                       </span>
-                      <span className="text-[11px] text-zinc-500 ml-1.5">
-                        Stock: {prod.current_stock}
-                      </span>
+                      <span className="text-[11px] text-[#A6AAA3]">&middot; Stock: {prod.current_stock}</span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
                     {qty > 0 ? (
-                      <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-700 rounded-lg p-1">
+                      <div className="flex items-center gap-1.5 bg-[#131714] border border-[#222823] rounded p-1">
                         <button
                           type="button"
                           onClick={() => handleUpdateQty(prod.id, -1)}
-                          className="w-7 h-7 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 flex items-center justify-center font-bold"
+                          className="w-6 h-6 rounded bg-[#0B0D0C] hover:bg-[#1a201c] text-[#A6AAA3] hover:text-[#F0EBDD] flex items-center justify-center font-bold active:scale-95"
                         >
-                          <Minus className="w-3.5 h-3.5" />
+                          <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-6 text-center font-bold text-sm text-emerald-400">
+                        <span className="w-6 text-center font-mono font-bold text-xs text-[#F0EBDD]">
                           {qty}
                         </span>
                         <button
                           type="button"
                           onClick={() => handleUpdateQty(prod.id, 1)}
-                          className="w-7 h-7 rounded bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center font-bold"
+                          className="w-6 h-6 rounded bg-[#187653] hover:bg-[#1f8c63] text-[#F0EBDD] flex items-center justify-center font-bold active:scale-95"
                         >
-                          <Plus className="w-3.5 h-3.5" />
+                          <Plus className="w-3 h-3" />
                         </button>
                       </div>
                     ) : (
@@ -222,7 +222,7 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
                         type="button"
                         onClick={() => handleUpdateQty(prod.id, 1)}
                         disabled={isOut}
-                        className="px-3 py-1.5 bg-emerald-950/60 hover:bg-emerald-800/60 border border-emerald-600/40 text-emerald-300 rounded-lg text-xs font-bold"
+                        className="px-3 py-1 bg-[#131714] hover:bg-[#1a201c] border border-[#222823] text-[#F0EBDD] rounded text-xs font-medium transition-colors"
                       >
                         + Add
                       </button>
@@ -234,16 +234,16 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
           </div>
 
           {/* Checkout Controls */}
-          <div className="p-4 bg-zinc-900/90 border-t border-zinc-800 space-y-3 shrink-0">
+          <div className="p-4 bg-[#0B0D0C] border-t border-[#222823] space-y-3 shrink-0">
             {/* Payment Method */}
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => setPaymentMethod("CASH")}
-                className={`py-2 px-3 rounded-lg border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "CASH"
-                    ? "bg-emerald-600 text-white border-emerald-500"
-                    : "bg-zinc-800 text-zinc-400 border-zinc-700"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#131714] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
                 <DollarSign className="w-3.5 h-3.5" /> Cash
@@ -251,10 +251,10 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
               <button
                 type="button"
                 onClick={() => setPaymentMethod("UPI")}
-                className={`py-2 px-3 rounded-lg border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "UPI"
-                    ? "bg-emerald-600 text-white border-emerald-500"
-                    : "bg-zinc-800 text-zinc-400 border-zinc-700"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#131714] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
                 <Smartphone className="w-3.5 h-3.5" /> UPI
@@ -262,10 +262,10 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
               <button
                 type="button"
                 onClick={() => setPaymentMethod("CREDIT")}
-                className={`py-2 px-3 rounded-lg border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "CREDIT"
-                    ? "bg-amber-600 text-white border-amber-500"
-                    : "bg-zinc-800 text-zinc-400 border-zinc-700"
+                    ? "bg-[#B69A62] text-[#0B0D0C] border-[#B69A62] font-semibold"
+                    : "bg-[#131714] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
                 <User className="w-3.5 h-3.5" /> Udhaar
@@ -276,10 +276,10 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
             <select
               value={selectedCustomerId}
               onChange={(e) => setSelectedCustomerId(e.target.value)}
-              className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 rounded-lg text-xs text-white outline-none"
+              className="w-full px-3 py-2 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] outline-none"
               required={paymentMethod === "CREDIT"}
             >
-              <option value="">-- {paymentMethod === "CREDIT" ? "Select Customer (Required for Udhaar)" : "Optional Customer"} --</option>
+              <option value="">-- {paymentMethod === "CREDIT" ? "Select Player (Required for Udhaar ledger)" : "Optional Player Account"} --</option>
               {customers.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name} {c.phone ? `(${c.phone})` : ""}
@@ -289,8 +289,8 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
 
             <div className="flex items-center justify-between pt-1">
               <div>
-                <span className="text-xs text-zinc-400">Total Billed:</span>
-                <div className="text-xl font-black text-white">
+                <span className="text-[10px] uppercase tracking-wider text-[#A6AAA3]">Total Payable:</span>
+                <div className="text-xl font-mono font-bold text-[#F0EBDD]">
                   {formatRupees(finalAmountPaise)}
                 </div>
               </div>
@@ -299,21 +299,21 @@ export function CounterSaleModal({ isOpen, onClose, onSuccess }: Props) {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="py-2 px-3 bg-zinc-800 text-zinc-300 rounded-xl text-xs font-semibold"
+                  className="py-2 px-3 bg-[#131714] hover:bg-[#1a201c] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823] rounded text-xs font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={cartCount === 0 || loading}
-                  className="py-2.5 px-5 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-md flex items-center gap-1.5"
+                  className="py-2.5 px-4 bg-[#187653] hover:bg-[#1f8c63] disabled:opacity-40 text-[#F0EBDD] font-medium text-xs rounded transition-colors flex items-center gap-1.5"
                 >
                   {loading ? (
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-[#F0EBDD]/30 border-t-[#F0EBDD] rounded-full animate-spin" />
                   ) : (
                     <>
-                      <Check className="w-4 h-4" />
-                      <span>Collect &amp; Print Bill</span>
+                      <Check className="w-3.5 h-3.5 text-[#B69A62]" />
+                      <span>Collect &amp; Record Sale</span>
                     </>
                   )}
                 </button>

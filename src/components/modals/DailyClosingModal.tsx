@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Lock, AlertTriangle, Check, AlertCircle, ArrowDownLeft, ArrowUpRight, PlusCircle } from "lucide-react";
+import { Lock, AlertTriangle, Check, AlertCircle, ArrowDownLeft, ArrowUpRight, PlusCircle, X } from "lucide-react";
 import { formatRupees, rupeesToPaise } from "@/lib/utils/money";
 import type { ShiftItem } from "@/lib/types";
 
@@ -132,18 +132,18 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#101522] border border-amber-600/40 rounded-2xl max-w-lg w-full max-h-[92vh] flex flex-col text-zinc-100 shadow-2xl animate-in fade-in zoom-in-95">
+      <div className="bg-[#131714] border border-[#222823] rounded-lg max-w-lg w-full max-h-[92vh] flex flex-col text-[#F0EBDD] shadow-2xl">
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-zinc-800 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-              <Lock className="w-5 h-5" />
+        <div className="p-5 border-b border-[#222823] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3.5">
+            <div className="w-10 h-10 rounded bg-[#0B0D0C] border border-[#222823] flex items-center justify-center text-[#B69A62]">
+              <Lock className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
-                Daily Accounting
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-semibold text-[#B69A62]">
+                Daily Accounting &amp; Reconciliation
               </span>
-              <h3 className="text-lg font-black text-white">
+              <h3 className="text-xl font-serif font-bold text-[#F0EBDD] mt-0.5">
                 Close Today&apos;s Hisab ({shift.shift_date})
               </h3>
             </div>
@@ -151,103 +151,106 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
           <button
             type="button"
             onClick={onClose}
-            className="text-zinc-400 hover:text-white p-1 text-xl font-bold"
+            className="text-[#A6AAA3] hover:text-[#F0EBDD] p-1 transition-colors"
           >
-            &times;
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mx-4 mt-3 p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-xs text-red-300 flex items-start gap-2 shrink-0">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <div className="mx-5 mt-4 p-3 bg-rose-950/40 border border-rose-800/50 rounded text-xs text-rose-300 flex items-start gap-2 shrink-0">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {/* Warning if running sessions exist */}
         {hasActiveSessions && (
-          <div className="mx-4 mt-3 p-3 bg-amber-950/60 border border-amber-600/60 rounded-xl text-xs text-amber-200 flex items-start gap-2.5 shrink-0">
-            <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div className="mx-5 mt-4 p-3.5 bg-[#0B0D0C] border border-[#B69A62]/40 rounded text-xs text-[#F0EBDD] flex items-start gap-3 shrink-0">
+            <AlertTriangle className="w-4 h-4 text-[#B69A62] shrink-0 mt-0.5" />
             <div>
-              <strong>Active Table Games Warning:</strong> {activeSessionsCount} table(s) are currently running games. It is recommended to end their games or carry them forward before locking the daily hisab.
+              <strong className="text-[#B69A62] block mb-0.5">Active Table Sessions Underway</strong>
+              <span className="text-[#A6AAA3]">
+                {activeSessionsCount} arena table{activeSessionsCount === 1 ? " is" : "s are"} currently running live sessions. Consider concluding ongoing games before locking today&apos;s financial ledger.
+              </span>
             </div>
           </div>
         )}
 
-        <div className="p-4 overflow-y-auto flex-1 space-y-4">
+        <div className="p-5 overflow-y-auto flex-1 space-y-4">
           {/* Detailed Drawer Cash Reconciliation */}
-          <div className="bg-zinc-900/90 rounded-xl border border-zinc-800 p-4 space-y-2.5 text-xs">
-            <div className="font-bold text-sm text-white pb-2 border-b border-zinc-800 flex items-center justify-between">
-              <span>Physical Cash Drawer Breakdown:</span>
-              <span className={`text-[11px] px-2 py-0.5 rounded font-bold ${isAlreadyClosed ? "bg-red-950 text-red-400 border border-red-800/40" : "bg-emerald-950 text-emerald-400 border border-emerald-800/40"}`}>
+          <div className="bg-[#0B0D0C] rounded-lg border border-[#222823] p-4 space-y-2.5 text-xs">
+            <div className="font-serif font-bold text-sm text-[#F0EBDD] pb-2 border-b border-[#222823] flex items-center justify-between">
+              <span>Physical Cash Drawer Breakdown (Rokad):</span>
+              <span className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded ${isAlreadyClosed ? "bg-[#131714] text-rose-400 border border-[#222823]" : "bg-[#131714] text-[#187653] border border-[#222823]"}`}>
                 {shift.status}
               </span>
             </div>
 
-            <div className="flex items-center justify-between text-zinc-300">
+            <div className="flex items-center justify-between text-[#A6AAA3]">
               <span>1. Opening Cash Float (Opening Rokad):</span>
-              <span className="font-mono font-semibold">{formatRupees(shift.opening_cash_paise)}</span>
+              <span className="font-mono font-semibold text-[#F0EBDD]">{formatRupees(shift.opening_cash_paise)}</span>
             </div>
 
-            <div className="flex items-center justify-between text-emerald-300">
+            <div className="flex items-center justify-between text-[#A6AAA3]">
               <span>2. Table Cash Collections:</span>
-              <span className="font-mono font-semibold">+{formatRupees(shift.table_cash_collected_paise)}</span>
+              <span className="font-mono font-semibold text-[#187653]">+{formatRupees(shift.table_cash_collected_paise)}</span>
             </div>
 
-            <div className="flex items-center justify-between text-emerald-300">
+            <div className="flex items-center justify-between text-[#A6AAA3]">
               <span>3. Counter Shop Cash Collections:</span>
-              <span className="font-mono font-semibold">+{formatRupees(shift.shop_cash_collected_paise)}</span>
+              <span className="font-mono font-semibold text-[#187653]">+{formatRupees(shift.shop_cash_collected_paise)}</span>
             </div>
 
-            <div className="flex items-center justify-between text-emerald-300">
+            <div className="flex items-center justify-between text-[#A6AAA3]">
               <span>4. Cash Received for Old Udhaar:</span>
-              <span className="font-mono font-semibold">+{formatRupees(shift.udhaar_cash_collected_paise)}</span>
+              <span className="font-mono font-semibold text-[#187653]">+{formatRupees(shift.udhaar_cash_collected_paise)}</span>
             </div>
 
             {shift.cash_added_paise > 0 && (
-              <div className="flex items-center justify-between text-emerald-400">
+              <div className="flex items-center justify-between text-[#A6AAA3]">
                 <span>5. Cash Added to Drawer:</span>
-                <span className="font-mono font-semibold">+{formatRupees(shift.cash_added_paise)}</span>
+                <span className="font-mono font-semibold text-[#187653]">+{formatRupees(shift.cash_added_paise)}</span>
               </div>
             )}
 
-            <div className="flex items-center justify-between text-rose-300">
+            <div className="flex items-center justify-between text-[#A6AAA3]">
               <span>6. Cash Expenses Paid from Drawer:</span>
-              <span className="font-mono font-semibold">-{formatRupees(shift.cash_expenses_paid_from_drawer_paise)}</span>
+              <span className="font-mono font-semibold text-rose-400">-{formatRupees(shift.cash_expenses_paid_from_drawer_paise)}</span>
             </div>
 
             {shift.cash_withdrawn_paise > 0 && (
-              <div className="flex items-center justify-between text-rose-400">
+              <div className="flex items-center justify-between text-[#A6AAA3]">
                 <span>7. Cash Withdrawn / Taken by Owner:</span>
-                <span className="font-mono font-semibold">-{formatRupees(shift.cash_withdrawn_paise)}</span>
+                <span className="font-mono font-semibold text-rose-400">-{formatRupees(shift.cash_withdrawn_paise)}</span>
               </div>
             )}
 
             {/* Expected Closing Cash */}
-            <div className="pt-2 border-t border-zinc-800 flex items-center justify-between text-sm font-bold bg-zinc-800/40 p-2 rounded-lg">
-              <span className="text-white">Expected Closing Cash in Drawer:</span>
-              <span className="text-amber-400 font-mono text-base font-black">
+            <div className="pt-2 border-t border-[#222823] flex items-center justify-between text-xs bg-[#131714] p-2.5 rounded border border-[#222823]">
+              <span className="font-semibold text-[#F0EBDD]">Expected Closing Cash in Drawer:</span>
+              <span className="text-[#F0EBDD] font-mono text-base font-bold">
                 {formatRupees(shift.expected_closing_cash_paise)}
               </span>
             </div>
           </div>
 
           {/* Non-Cash Information Banner (UPI & Unpaid Udhaar) */}
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="p-3 bg-blue-950/30 border border-blue-800/40 rounded-xl">
-              <span className="text-blue-300 block font-semibold mb-0.5">UPI Collections:</span>
-              <span className="text-base font-bold text-white font-mono">
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="p-3 bg-[#0B0D0C] border border-[#222823] rounded-lg">
+              <span className="text-[10px] uppercase tracking-wider text-[#A6AAA3] block mb-1">UPI Collections</span>
+              <span className="text-base font-bold text-[#F0EBDD] font-mono">
                 {formatRupees(shift.total_upi_collected_paise)}
               </span>
-              <span className="text-[10px] text-zinc-400 block mt-0.5">In bank (not in drawer)</span>
+              <span className="text-[10px] text-[#A6AAA3] block mt-1">Directly in bank account</span>
             </div>
 
-            <div className="p-3 bg-amber-950/30 border border-amber-800/40 rounded-xl">
-              <span className="text-amber-300 block font-semibold mb-0.5">New Udhaar Given:</span>
-              <span className="text-base font-bold text-white font-mono">
+            <div className="p-3 bg-[#0B0D0C] border border-[#222823] rounded-lg">
+              <span className="text-[10px] uppercase tracking-wider text-[#B69A62] block mb-1">New Udhaar Extended</span>
+              <span className="text-base font-bold text-[#F0EBDD] font-mono">
                 {formatRupees(shift.total_credit_given_paise)}
               </span>
-              <span className="text-[10px] text-zinc-400 block mt-0.5">Unpaid customer debt</span>
+              <span className="text-[10px] text-[#A6AAA3] block mt-1">Pending player debt</span>
             </div>
           </div>
 
@@ -258,19 +261,19 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
                 <button
                   type="button"
                   onClick={() => setShowMovementForm(true)}
-                  className="w-full py-2 px-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl text-xs font-semibold text-zinc-300 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-3 bg-[#0B0D0C] hover:bg-[#1a201c] border border-[#222823] rounded text-xs font-medium text-[#A6AAA3] hover:text-[#F0EBDD] flex items-center justify-center gap-2 transition-colors"
                 >
-                  <PlusCircle className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Record Cash Drawer In / Out (Withdrawal or Float Injection)</span>
+                  <PlusCircle className="w-3.5 h-3.5 text-[#B69A62]" />
+                  <span>Record Cash Drawer Adjustment (Float Injection or Withdrawal)</span>
                 </button>
               ) : (
-                <div className="p-3 bg-zinc-900 rounded-xl border border-zinc-800 space-y-3">
+                <div className="p-3.5 bg-[#0B0D0C] rounded-lg border border-[#222823] space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white">Record Drawer Cash Movement</span>
+                    <span className="text-xs font-serif font-bold text-[#F0EBDD]">Record Drawer Movement</span>
                     <button
                       type="button"
                       onClick={() => setShowMovementForm(false)}
-                      className="text-zinc-500 hover:text-zinc-300 text-xs"
+                      className="text-[#A6AAA3] hover:text-[#F0EBDD] text-xs"
                     >
                       Cancel
                     </button>
@@ -279,24 +282,24 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
                     <button
                       type="button"
                       onClick={() => setMovementType("WITHDRAWAL")}
-                      className={`py-1.5 px-2 rounded-lg text-xs font-semibold border flex items-center justify-center gap-1 ${
+                      className={`py-1.5 px-2 rounded text-xs font-medium border flex items-center justify-center gap-1 transition-colors ${
                         movementType === "WITHDRAWAL"
-                          ? "bg-rose-600 text-white border-rose-500"
-                          : "bg-zinc-800 text-zinc-400 border-zinc-700"
+                          ? "bg-[#131714] text-[#F0EBDD] border-rose-500 font-semibold"
+                          : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823]"
                       }`}
                     >
-                      <ArrowUpRight className="w-3.5 h-3.5" /> Cash Withdrawal
+                      <ArrowUpRight className="w-3.5 h-3.5 text-rose-400" /> Withdrawal
                     </button>
                     <button
                       type="button"
                       onClick={() => setMovementType("ADDITION")}
-                      className={`py-1.5 px-2 rounded-lg text-xs font-semibold border flex items-center justify-center gap-1 ${
+                      className={`py-1.5 px-2 rounded text-xs font-medium border flex items-center justify-center gap-1 transition-colors ${
                         movementType === "ADDITION"
-                          ? "bg-emerald-600 text-white border-emerald-500"
-                          : "bg-zinc-800 text-zinc-400 border-zinc-700"
+                          ? "bg-[#131714] text-[#F0EBDD] border-[#187653] font-semibold"
+                          : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823]"
                       }`}
                     >
-                      <ArrowDownLeft className="w-3.5 h-3.5" /> Cash In / Addition
+                      <ArrowDownLeft className="w-3.5 h-3.5 text-[#187653]" /> Cash Addition
                     </button>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -305,20 +308,20 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
                       placeholder="Amount (₹)"
                       value={movementRupees}
                       onChange={(e) => setMovementRupees(e.target.value)}
-                      className="px-3 py-1.5 bg-[#090d14] border border-zinc-800 rounded-lg text-xs text-white outline-none"
+                      className="px-3 py-1.5 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] outline-none"
                     />
                     <input
                       type="text"
                       placeholder="Reason (e.g. Owner bank deposit)"
                       value={movementReason}
                       onChange={(e) => setMovementReason(e.target.value)}
-                      className="px-3 py-1.5 bg-[#090d14] border border-zinc-800 rounded-lg text-xs text-white outline-none"
+                      className="px-3 py-1.5 bg-[#131714] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] outline-none"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={handleRecordMovement}
-                    className="w-full py-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold"
+                    className="w-full py-2 bg-[#187653] hover:bg-[#1f8c63] text-[#F0EBDD] rounded text-xs font-medium transition-colors"
                   >
                     Save Movement
                   </button>
@@ -328,10 +331,10 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
           )}
 
           {/* Actual Cash Counted Form */}
-          <form onSubmit={handleCloseShift} className="space-y-3 pt-2">
+          <form onSubmit={handleCloseShift} className="space-y-3.5 pt-2">
             <div>
-              <label className="block text-xs font-bold text-white mb-1.5">
-                Physical Cash Counted in Drawer (Rokad Tally):
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+                Physical Cash Counted in Drawer (Actual Rokad):
               </label>
               <input
                 type="number"
@@ -340,39 +343,39 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
                 disabled={isAlreadyClosed}
                 value={actualCountedRupees}
                 onChange={(e) => setActualCountedRupees(e.target.value)}
-                className="w-full px-4 py-3 bg-[#090d14] border border-zinc-800 focus:border-amber-500 rounded-xl text-xl font-mono font-black text-amber-300 outline-none"
+                className="w-full px-4 py-3 bg-[#0B0D0C] border border-[#222823] focus:border-[#B69A62] rounded-lg text-xl font-mono font-bold text-[#F0EBDD] outline-none"
                 required
               />
             </div>
 
             {/* Difference indicator */}
-            <div className={`p-3 rounded-xl border flex items-center justify-between text-xs font-bold ${
+            <div className={`p-3 rounded-lg border flex items-center justify-between text-xs font-medium ${
               differencePaise === 0
-                ? "bg-emerald-950/30 border-emerald-500/40 text-emerald-300"
+                ? "bg-[#0B0D0C] border-[#187653]/60 text-[#187653]"
                 : differencePaise > 0
-                ? "bg-blue-950/30 border-blue-500/40 text-blue-300"
-                : "bg-rose-950/40 border-rose-500/50 text-rose-300"
+                ? "bg-[#0B0D0C] border-[#187653]/40 text-[#F0EBDD]"
+                : "bg-[#0B0D0C] border-rose-800/50 text-rose-400"
             }`}>
-              <span>Drawer Discrepancy (Farak):</span>
-              <span className="font-mono text-sm">
+              <span>Reconciliation Discrepancy (Farak):</span>
+              <span className="font-mono text-sm font-bold">
                 {differencePaise === 0
-                  ? "₹0 (Perfect Match!)"
+                  ? "₹0 (Exact Match)"
                   : `${differencePaise > 0 ? "+" : ""}${formatRupees(differencePaise)} (${differencePaise > 0 ? "Surplus" : "Shortage"})`}
               </span>
             </div>
 
             {/* Closing note */}
             <div>
-              <label className="block text-xs font-semibold text-zinc-400 mb-1">
-                Closing Remarks {hasDiscrepancy && <span className="text-red-400">* (Reason required for discrepancy)</span>}
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1">
+                Audit Notes &amp; Explanations {hasDiscrepancy && <span className="text-rose-400">* (Required for discrepancy)</span>}
               </label>
               <input
                 type="text"
                 disabled={isAlreadyClosed}
-                placeholder="e.g. Verified by Moiz, ₹2000 float left in drawer"
+                placeholder="e.g. Verified and counted by Moiz, float retained in register"
                 value={closingNotes}
                 onChange={(e) => setClosingNotes(e.target.value)}
-                className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-amber-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none"
+                className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
               />
             </div>
 
@@ -381,7 +384,7 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
               <button
                 type="button"
                 onClick={onClose}
-                className="w-1/3 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl font-semibold text-sm"
+                className="w-1/3 py-2.5 px-3 bg-[#0B0D0C] hover:bg-[#1a201c] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823] rounded font-medium text-xs transition-colors"
               >
                 Cancel
               </button>
@@ -389,20 +392,20 @@ export function DailyClosingModal({ isOpen, onClose, onSuccess }: Props) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-2/3 py-3 px-4 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 disabled:opacity-50 text-white font-black text-sm rounded-xl shadow-lg shadow-amber-950/60 flex items-center justify-center gap-2"
+                  className="w-2/3 py-2.5 px-4 bg-[#B69A62] hover:bg-[#c2a76f] active:scale-[0.98] disabled:opacity-40 text-[#0B0D0C] font-semibold text-xs rounded transition-colors flex items-center justify-center gap-2"
                 >
                   {loading ? (
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-[#0B0D0C]/30 border-t-[#0B0D0C] rounded-full animate-spin" />
                   ) : (
                     <>
-                      <Lock className="w-4 h-4" />
-                      <span>Lock &amp; Close Today&apos;s Hisab</span>
+                      <Lock className="w-3.5 h-3.5" />
+                      <span>Lock &amp; Reconcile Daily Hisab</span>
                     </>
                   )}
                 </button>
               ) : (
-                <div className="w-2/3 py-3 px-4 bg-zinc-800 text-zinc-400 rounded-xl text-xs font-bold text-center">
-                  Hisab Already Closed &amp; Locked
+                <div className="w-2/3 py-2.5 px-4 bg-[#0B0D0C] border border-[#222823] text-[#A6AAA3] rounded text-xs font-mono font-medium text-center">
+                  Hisab Reconciled &amp; Locked
                 </div>
               )}
             </div>

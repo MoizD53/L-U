@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Check, AlertCircle, Info, DollarSign, Smartphone } from "lucide-react";
+import { Check, AlertCircle, Info, DollarSign, Smartphone, X } from "lucide-react";
 import { rupeesToPaise } from "@/lib/utils/money";
 import type { ExpensePaidBy } from "@/lib/types";
 
@@ -96,26 +96,28 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#101522] border border-zinc-800 rounded-2xl max-w-md w-full p-6 text-zinc-100 shadow-2xl animate-in fade-in zoom-in-95">
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+      <div className="bg-[#131714] border border-[#222823] rounded-lg max-w-md w-full p-6 text-[#F0EBDD] shadow-2xl">
+        <div className="flex items-center justify-between pb-4 border-b border-[#222823]">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-rose-400">
-              Cash Outflow
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-semibold text-[#B69A62]">
+              Financial Disbursement Voucher
             </span>
-            <h3 className="text-lg font-black text-white">Record Arena Expense</h3>
+            <h3 className="text-xl font-serif font-bold text-[#F0EBDD] mt-0.5">
+              Record Arena Outflow
+            </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-zinc-400 hover:text-white p-1 text-xl font-bold"
+            className="text-[#A6AAA3] hover:text-[#F0EBDD] p-1 transition-colors"
           >
-            &times;
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-xs text-red-300 flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <div className="mt-4 p-3 bg-rose-950/40 border border-rose-800/50 rounded text-xs text-rose-300 flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
@@ -123,15 +125,15 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
         <form onSubmit={handleSubmit} className="space-y-4 pt-4">
           {/* Title */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1">
-              Expense Title / Description
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+              Expense Title / Voucher Description
             </label>
             <input
               type="text"
-              placeholder="e.g. Electricity bill, Staff advance, Phenyl"
+              placeholder="e.g. Electricity bill, Staff advance, Cue maintenance"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-rose-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none"
+              className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
               required
             />
           </div>
@@ -139,13 +141,13 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
           {/* Category & Amount */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-zinc-300 mb-1">
-                Category
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+                Expense Category
               </label>
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-rose-500 rounded-xl text-xs text-white outline-none"
+                className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] outline-none"
                 required
               >
                 {categories.map((c) => (
@@ -157,7 +159,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
                 Amount (₹)
               </label>
               <input
@@ -167,7 +169,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
                 placeholder="₹"
                 value={amountRupees}
                 onChange={(e) => setAmountRupees(e.target.value)}
-                className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-rose-500 rounded-xl text-sm font-bold text-rose-400 outline-none"
+                className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-sm font-mono font-bold text-[#F0EBDD] outline-none"
                 required
               />
             </div>
@@ -175,59 +177,59 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
 
           {/* Payment Method */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
               Payment Method
             </label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => setPaymentMethod("CASH")}
-                className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "CASH"
-                    ? "bg-rose-600 text-white border-rose-500"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <DollarSign className="w-4 h-4" /> Physical Cash
+                <DollarSign className="w-3.5 h-3.5 text-[#B69A62]" /> Physical Cash
               </button>
               <button
                 type="button"
                 onClick={() => setPaymentMethod("UPI")}
-                className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 ${
+                className={`py-2 px-3 rounded border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                   paymentMethod === "UPI"
-                    ? "bg-emerald-600 text-white border-emerald-500"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                <Smartphone className="w-4 h-4" /> Bank / UPI
+                <Smartphone className="w-3.5 h-3.5 text-[#187653]" /> Bank / UPI
               </button>
             </div>
           </div>
 
           {/* Paid By (Accounting source) */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-              Paid From (Source of Funds)
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1.5">
+              Funding Source (Ledger Account)
             </label>
             <div className="grid grid-cols-3 gap-1.5">
               <button
                 type="button"
                 onClick={() => setPaidBy("BUSINESS_DRAWER")}
-                className={`py-2 px-1 text-[11px] rounded-lg border text-center font-semibold ${
+                className={`py-2 px-1 text-[11px] rounded border text-center font-medium transition-colors ${
                   paidBy === "BUSINESS_DRAWER"
-                    ? "bg-amber-600 text-white border-amber-500"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                Shop Drawer
+                Drawer (Rokad)
               </button>
               <button
                 type="button"
                 onClick={() => setPaidBy("PERSONAL_FUNDS")}
-                className={`py-2 px-1 text-[11px] rounded-lg border text-center font-semibold ${
+                className={`py-2 px-1 text-[11px] rounded border text-center font-medium transition-colors ${
                   paidBy === "PERSONAL_FUNDS"
-                    ? "bg-blue-600 text-white border-blue-500"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
                 Personal Funds
@@ -235,38 +237,38 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
               <button
                 type="button"
                 onClick={() => setPaidBy("BANK")}
-                className={`py-2 px-1 text-[11px] rounded-lg border text-center font-semibold ${
+                className={`py-2 px-1 text-[11px] rounded border text-center font-medium transition-colors ${
                   paidBy === "BANK"
-                    ? "bg-purple-600 text-white border-purple-500"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                    ? "bg-[#187653] text-[#F0EBDD] border-[#187653] font-semibold"
+                    : "bg-[#0B0D0C] text-[#A6AAA3] border-[#222823] hover:text-[#F0EBDD]"
                 }`}
               >
-                Bank Account
+                Arena Bank
               </button>
             </div>
-            <div className="flex items-start gap-1.5 mt-2 text-[11px] text-zinc-400 bg-zinc-900/60 p-2 rounded-lg border border-zinc-800">
-              <Info className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2 mt-2 text-[11px] text-[#A6AAA3] bg-[#0B0D0C] p-2.5 rounded border border-[#222823]">
+              <Info className="w-3.5 h-3.5 text-[#B69A62] shrink-0 mt-0.5" />
               <span>
                 {paidBy === "BUSINESS_DRAWER" && paymentMethod === "CASH"
-                  ? "Takes cash from shop drawer and reduces expected closing cash."
+                  ? "Deducted directly from drawer cash. Reduces expected physical closing rokad."
                   : paidBy === "PERSONAL_FUNDS"
-                  ? "Paid from owner/manager personal pocket. Drawer cash will NOT be reduced."
-                  : "Paid directly from business bank account via online transfer."}
+                  ? "Disbursed from owner/manager personal funds. Counter drawer cash remains unchanged."
+                  : "Paid directly from arena bank account via digital transfer."}
               </span>
             </div>
           </div>
 
           {/* Payee / Receiver */}
           <div>
-            <label className="block text-xs font-semibold text-zinc-400 mb-1">
-              Paid To (Payee Name / Supplier)
+            <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#A6AAA3] mb-1">
+              Payee Recipient / Vendor Name
             </label>
             <input
               type="text"
-              placeholder="e.g. Staff name, MGVCL, Landlord"
+              placeholder="e.g. Staff name, Electricity Board, Vendor"
               value={payee}
               onChange={(e) => setPayee(e.target.value)}
-              className="w-full px-3 py-2 bg-[#090d14] border border-zinc-800 focus:border-rose-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none"
+              className="w-full px-3 py-2 bg-[#0B0D0C] border border-[#222823] focus:border-[#187653] rounded text-xs text-[#F0EBDD] placeholder-[#A6AAA3]/50 outline-none"
             />
           </div>
 
@@ -274,21 +276,21 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="w-1/3 py-3 px-4 bg-zinc-800 text-zinc-300 rounded-xl font-semibold text-sm"
+              className="w-1/3 py-2.5 px-3 bg-[#0B0D0C] hover:bg-[#1a201c] text-[#A6AAA3] hover:text-[#F0EBDD] border border-[#222823] rounded font-medium text-xs transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="w-2/3 py-3 px-4 bg-rose-600 hover:bg-rose-500 active:bg-rose-700 disabled:opacity-50 text-white font-bold text-sm rounded-xl shadow-lg flex items-center justify-center gap-2"
+              className="w-2/3 py-2.5 px-4 bg-[#187653] hover:bg-[#1f8c63] disabled:opacity-40 text-[#F0EBDD] font-medium text-xs rounded transition-colors flex items-center justify-center gap-2 active:scale-[0.98]"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#F0EBDD]/30 border-t-[#F0EBDD] rounded-full animate-spin" />
               ) : (
                 <>
-                  <Check className="w-4 h-4" />
-                  <span>Save Expense</span>
+                  <Check className="w-3.5 h-3.5 text-[#B69A62]" />
+                  <span>Record Disbursement</span>
                 </>
               )}
             </button>
